@@ -1,0 +1,10 @@
+{
+  "name": "campusstay/demo-ui",
+  "description": "Optional API-only browser client",
+  "require": {
+    "php": ">=8.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-session": "*"
+  }
+}

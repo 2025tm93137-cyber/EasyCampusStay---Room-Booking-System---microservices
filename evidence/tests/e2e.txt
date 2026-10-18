@@ -1,0 +1,7 @@
+Timestamp UTC: 2026-10-18T15:46:58.679115+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python scripts/e2e.py
+
+End-to-end | 2026-10-18T15:46:58.757832+00:00
+PASS: room reserved, mock payment charged, booking confirmed, notification failed once then sent.
+
+Exit code: 0

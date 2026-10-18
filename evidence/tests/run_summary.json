@@ -1,0 +1,183 @@
+{
+  "finished_at": "2026-10-18T15:47:07.353102+00:00",
+  "result": "PASS",
+  "commands": [
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=evidence/tests/unit_tests.xml"
+      ],
+      "started_at": "2026-10-18T15:46:56.812687+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/php",
+        "services/payment/tests/rules_test.php"
+      ],
+      "started_at": "2026-10-18T15:46:57.465971+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/php",
+        "services/notification/tests/rules_test.php"
+      ],
+      "started_at": "2026-10-18T15:46:57.479535+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "scripts/e2e.py"
+      ],
+      "started_at": "2026-10-18T15:46:58.679115+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "scripts/challenge_concurrency.py"
+      ],
+      "started_at": "2026-10-18T15:46:58.930912+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "scripts/challenge_idempotency.py"
+      ],
+      "started_at": "2026-10-18T15:46:59.434703+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "scripts/challenge_saga.py"
+      ],
+      "started_at": "2026-10-18T15:46:59.931057+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "scripts/additional_checks.py"
+      ],
+      "started_at": "2026-10-18T15:47:00.267486+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python",
+        "scripts/export_openapi.py"
+      ],
+      "started_at": "2026-10-18T15:47:05.572393+00:00",
+      "exit_code": 0
+    }
+  ],
+  "python_workers_per_service": 2,
+  "php_runtime": "PHP development server, 4 workers per service",
+  "database_engine": "10.11.14-MariaDB-0ubuntu0.24.04.1",
+  "python_version": "3.12.14",
+  "php_version": "8.3.6",
+  "business_rule_tests": 40,
+  "launcher_configuration_tests": 9,
+  "actual_os": "Linux",
+  "native_windows_run": false,
+  "source_sha256": {
+    "services/inventory/.env.example": "53616bf4eb777002270dd3ffd1c97bac0744d79f48338d830b38a401a115dbe7",
+    "services/inventory/README.md": "a7ca5aecd9bedad37d46017449d5bd4a0be4f18acf4bcb0f203a59e99aa440a9",
+    "services/inventory/database/00_create_database.sql": "d8d2d228024fb76755eb27b0464d1546a1a64ad5c92016859417fe5fcf161da1",
+    "services/inventory/database/01_create_user.sql.example": "c025f4e6433e9ce434e8a39152050ef9ff8933b1223dd404cbfddb7282d1fa4b",
+    "services/inventory/database/README.md": "98a4e57741f6d9cdc6657638ba05a72ea9649f85d14b391023683a5eb57de9ff",
+    "services/inventory/database/schema.sql": "5af450e75276c337d722f43c3528c16e9476525e4b887a6e26e45bef301274d5",
+    "services/inventory/requirements.lock.txt": "65e245dad15892c44029d16cda9a7250875ca13373a3accb4399cb06b16c63f5",
+    "services/inventory/requirements.txt": "afc73932da04b8833d5e39e973b53774f10039d995044c706eb1cd50b41938d3",
+    "services/inventory/run.py": "e30e0c6b88136331f5ef83db8b35f005c448d26601cf97b82f784dd74f7fe3ca",
+    "services/inventory/src/inventory_service/__init__.py": "247bd9896334e7657353d5d2171a55c72f8ad3c92f41fb784dd49e06350d2431",
+    "services/inventory/src/inventory_service/main.py": "10e5f1795631a1b8c729d88eefa400c1a68dff12e8aa946500d9ed7b638d8f9f",
+    "services/inventory/src/inventory_service/mysql.py": "d7e922b89c40b9cc53b8f50eff6b38cee0562e04514b5c095450a6b8c582fd92",
+    "services/inventory/src/inventory_service/platform.py": "cff6d81abdbf44f250bbd2494a4129ee39b4f318442100165693bdb76ce4a8cc",
+    "services/inventory/src/inventory_service/repository.py": "acf6a89fc9b4903f59f4d1217632c0ec4f9e71455d4b53d9a14a14d6f724b18c",
+    "services/inventory/src/inventory_service/rules.py": "d1e6b537251dd40c3448d3ae38c1701482599f2263b8b26e97a3761b99c4924b",
+    "services/inventory/tests/test_inventory_rules.py": "bbbb380a50d0cc42041a0c566e03e7151d8b172642260a5868fd19308f3e2aed",
+    "services/notification/.env.example": "8ecdf9f1b3d5c7c39257343776418e16d6777ca194a0f2277943312c81e39ffc",
+    "services/notification/README.md": "68afa94909160425cf41351964b10c24937b586281c62d80307ab2f149d2cb66",
+    "services/notification/composer.json": "b9249d287215cbb0bb385df06454416aea91e262d7f66e6850db47a4b3233cad",
+    "services/notification/database/00_create_database.sql": "1d36c86d4fdcf4e857249677b9b7a820d1f035b548296dd50e2e24f9dc876f76",
+    "services/notification/database/01_create_user.sql.example": "99dbba757826a22d2afeec4808acfdb97195d74a8fb56bffad81af3d0910c76e",
+    "services/notification/database/README.md": "f87734ef339c3d591446baa08350d84b673d7077e438f3e83e0ef72efd6e86c2",
+    "services/notification/database/schema.sql": "0e6aae787c27b68ce872078ac629c22d2f3acb1fa22d3ff44d44046a6e58cf55",
+    "services/notification/openapi.json": "1bcef7d944e2d2194aec2bd4601d24804fa19df18602b4bcbd2ff3a3eb0ec29b",
+    "services/notification/public/index.php": "9c990535e8e430dfcbad5419ea31738ae15979417b8d8c2b4d0550b0f38ed133",
+    "services/notification/public/router.php": "b1e9ea3ca752bebe6cc6a0edf70663b20e508ca4af1cf68b3d2f626f9d3a86b3",
+    "services/notification/run.py": "f157fa831e94c28153073868529185f7fb96f04054a5eef6a063b9d93dc47cb6",
+    "services/notification/src/main.php": "82565629499187f09a16b2b38cffcd1e9dcc64bda0a32732c1882c5f522e1905",
+    "services/notification/src/platform.php": "008e741dab60b9334fed04dd6a8fd809c4f36b0e76e1668206df5f8703989247",
+    "services/notification/src/repository.php": "004d2ef68e7cbd3dd512e9e3c456fdf0024273437abe6ac37bcadc7500acd2a3",
+    "services/notification/src/rules.php": "a8677a0ebf76e4fa26ae2a1aec288484e93d02440e74ecbad4ee0d1582f54692",
+    "services/notification/tests/rules_test.php": "b4751016b9a9bc4f0b9c0d27c97f1a5edc52c4eeb2782c5ae3bac830ce6cb482",
+    "services/payment/.env.example": "85e7b0674176d35637646669f6efbd0dff7e2e0e5929c298dad33c819e48fa57",
+    "services/payment/README.md": "e914b85faa46542ca83e1cbda22d07c96789af6149ea7c5bd28a5436747ca40f",
+    "services/payment/composer.json": "bdc9c67d401c791cfc20788d79b83125340a16ba08195cf3bdae94f3a8c61825",
+    "services/payment/database/00_create_database.sql": "598c6ccbbeea59bd8565f05ec925c4030551ca991fb8b8dba74c0f9ac1fdfaed",
+    "services/payment/database/01_create_user.sql.example": "3abc16ec4028490bd48dbf05dd8516165b8ae8bb27aee004d8effa5591460797",
+    "services/payment/database/README.md": "bd1f02a632a4afe41f5c03cb018539d3a8748d5cdfbdc034337ad7d6a280ecc9",
+    "services/payment/database/schema.sql": "d90ae96a0cde84d7b75b081d0047ff4b829ab554fabb26408c5803f307f1cbee",
+    "services/payment/openapi.json": "08bfb7b3d600cd4bf956617270e603f499686027764c271baffe9fc7cb5dc17a",
+    "services/payment/public/index.php": "9c990535e8e430dfcbad5419ea31738ae15979417b8d8c2b4d0550b0f38ed133",
+    "services/payment/public/router.php": "b1e9ea3ca752bebe6cc6a0edf70663b20e508ca4af1cf68b3d2f626f9d3a86b3",
+    "services/payment/run.py": "f157fa831e94c28153073868529185f7fb96f04054a5eef6a063b9d93dc47cb6",
+    "services/payment/src/main.php": "c24a918758781ba98363c21625f47b41f816196dd4c8b52b36b093e670b4a17e",
+    "services/payment/src/platform.php": "008e741dab60b9334fed04dd6a8fd809c4f36b0e76e1668206df5f8703989247",
+    "services/payment/src/repository.php": "8faf823d4c98552488abe62bf36960def9a4527be90944968398a458429c1a43",
+    "services/payment/src/rules.php": "0345129752586d8ecc816b2f52e8b7339376e19ac861ab17aeb7aadca8df45c5",
+    "services/payment/tests/rules_test.php": "f8bedff398ae2b2e8e3956960cf4dc873d9e378f8acb16ecc771b5077216de8c",
+    "services/reservation/.env.example": "0f4fa46898baada6866ed27a89b6a6b3f5a0ca3d1646fb5da8dfb82149f2f604",
+    "services/reservation/README.md": "a3aa73b3e4ced25114280842bdbfe0464ffd5bf4e0806ba3287be547a91c6c98",
+    "services/reservation/database/00_create_database.sql": "5423334c0a67d512f33d64de1dfe756ac706759ebf7432c144fd692f2949cc2d",
+    "services/reservation/database/01_create_user.sql.example": "39cb9a96abdb01c45f4ee54e23abc38ce6b9e5a0e2aa86e154628c57df283dee",
+    "services/reservation/database/README.md": "1e90d7f5a4dcfc13ada093ae6f2b640114e13f19b52ee6d9af0a56f04d986fc0",
+    "services/reservation/database/schema.sql": "82d4d497a8071fbc881e9c936a9bb0959e020d1c4d39b90d1da078f5da073d1f",
+    "services/reservation/requirements.lock.txt": "65e245dad15892c44029d16cda9a7250875ca13373a3accb4399cb06b16c63f5",
+    "services/reservation/requirements.txt": "afc73932da04b8833d5e39e973b53774f10039d995044c706eb1cd50b41938d3",
+    "services/reservation/run.py": "e30e0c6b88136331f5ef83db8b35f005c448d26601cf97b82f784dd74f7fe3ca",
+    "services/reservation/src/reservation_service/__init__.py": "eb6dedf10d7fcc5310d1b515339b889e6f295859496ee7ef7bc30aec96cdd682",
+    "services/reservation/src/reservation_service/main.py": "c5828b5943843f406d9fe037cd57fa5d05533c49946687d964582438f1a51b0f",
+    "services/reservation/src/reservation_service/mysql.py": "d7e922b89c40b9cc53b8f50eff6b38cee0562e04514b5c095450a6b8c582fd92",
+    "services/reservation/src/reservation_service/platform.py": "cff6d81abdbf44f250bbd2494a4129ee39b4f318442100165693bdb76ce4a8cc",
+    "services/reservation/src/reservation_service/repository.py": "be8f67412057bdf8622bea37395d460988b4ce15ac1b9b0dc684d7514793709d",
+    "services/reservation/src/reservation_service/rules.py": "6b9cd9ed8cdca1559713d889a03dea484b5abb06a6c50f24b85b915755dd08dc",
+    "services/reservation/src/reservation_service/saga.py": "f1e18d69d6242c44f6028815437182714434ffa8aae1188eb2502be3ce511830",
+    "services/reservation/tests/test_reservation_rules.py": "13b1bcce163d14bb0c1bc169eae295bbb5ee359ee6f20e09aa9297a37f1f9672",
+    "scripts/additional_checks.py": "19483ae72e67bf4d7f6bc9d4b792e055e2a0d8b6d101ec3dda75fcf0b6abdac5",
+    "scripts/challenge_concurrency.py": "15a5e5925660c8b3322c589cf0445321f3f33f7db423ad32596d2da780af7503",
+    "scripts/challenge_idempotency.py": "fe88580ccf69aa9f88d3074e50966ec0a8eb826be6ee0841982c801a245e673c",
+    "scripts/challenge_saga.py": "9b04f0d6e9654122df788538684d080a6516cc35dceb707775e56a2570b7a00d",
+    "scripts/common.py": "72989d6a2c3b76a5e942458f01c3cd65f0948a47802752c22af7c3db67a589fb",
+    "scripts/configure.py": "0e5f22bda07b13abf438f8eaef483a830ae315bc6a386e81fe34f85c945b41bc",
+    "scripts/db.py": "d7e922b89c40b9cc53b8f50eff6b38cee0562e04514b5c095450a6b8c582fd92",
+    "scripts/doctor.py": "e80a2b1936d906f59b463935bdc0a6f86f264f46b287f6913b3fc93bc3c440a9",
+    "scripts/e2e.py": "4f1a20303d8b12c7e3aed6a1455e579b4d3a229c950ee0658395fe58181eb5f5",
+    "scripts/export_openapi.py": "b39ed025315a94922717f5a1fa5de9f06b03969248516383faa8aca03f6c6a68",
+    "scripts/fill_submission_details.py": "7a77c721a3694b5ab3a08bb42ab52ba80cf580fff7ccaf5f78a9c7793089c206",
+    "scripts/init_databases.py": "f65dcd9989263a387d4e8778d84e675c2bbddb3d052b1f3ec101c4fac3fb6d78",
+    "scripts/recovery_checks.py": "5c989814f167ba2247755e3cf340baf70e9a9880dcdf53eea045899628ea2bc7",
+    "scripts/run.py": "1f5f85557095adc8b8ee47f0533fbf845d8daf7e23c883868d942b68d6e4fb7f",
+    "scripts/run_all.py": "2b93a1e816f5b6cac8e346c4a88b81daeaf1e79662e7e5dfbef4f10df16a818f",
+    "scripts/vendor_platform.py": "8ae953667ea108f174ffe171dbc86d05c87eb35fa958d3df0fd51282e0bed2f9",
+    "ui/.env.example": "dc1b2866375b3474a8a37346dab1a38186437424c8fd698e9263099328835fea",
+    "ui/README.md": "43f1f9654351428385a8c8841dcc29066fc9bb6a245df44122f75c795001fa90",
+    "ui/bootstrap.php": "93ab41b9486f5172952880252b7e44f9902556520f99c66907f01eed1ba22645",
+    "ui/composer.json": "76ea406943481ac7deea551e7b03880cd59567da3797a4c5ae706f62d2cc51c8",
+    "ui/public/api.php": "9a32c831f76c0104ab75a5e7e7e491d5bc5962525393f2dace3fb9558409ddff",
+    "ui/public/assets/app.js": "8a2c5f99b7f54f0af2bba1df431dba89c5a1c3510561883e0dd0ea9ffcfebc5c",
+    "ui/public/assets/style.css": "b296fcc6e57c18a51c87e21effbac005412554a68a9ca590fc4a6b2c7397c975",
+    "ui/public/index.php": "33e1efe02e7fbe4579676a5cd680818e2f4cd8d709cafba0b90f45bed05b3359",
+    "ui/public/router.php": "b1e9ea3ca752bebe6cc6a0edf70663b20e508ca4af1cf68b3d2f626f9d3a86b3",
+    "ui/run.py": "f157fa831e94c28153073868529185f7fb96f04054a5eef6a063b9d93dc47cb6"
+  }
+}

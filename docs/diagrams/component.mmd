@@ -1,0 +1,9 @@
+flowchart TD
+  U["Optional PHP console :8180"] -->|REST HTTP| R["Reservation Python :8102"]
+  R -->|REST HTTP| I["Inventory Python :8101"]
+  R -->|REST HTTP| P["Payment PHP mock :8103"]
+  R -->|REST HTTP| N["Notification PHP mock :8104"]
+  R --> RD[("campusstay_reservation")]
+  I --> ID[("campusstay_inventory")]
+  P --> PD[("campusstay_payment")]
+  N --> ND[("campusstay_notification")]

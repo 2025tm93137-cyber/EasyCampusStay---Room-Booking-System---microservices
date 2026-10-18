@@ -1,0 +1,6 @@
+{"timestamp":"2026-10-18T15:46:58Z","service":"payment","event":"http_request","correlation_id":"e2e-f3064216-61bc-43a9-a819-349ab06402a7","method":"POST","path":"/api/v1/payments","status":201}
+{"timestamp":"2026-10-18T15:47:03Z","service":"payment","event":"http_request","correlation_id":"slow-384ef842-d4d2-452a-94a3-84e654f3f421","method":"POST","path":"/api/v1/payments","status":201}
+{"timestamp":"2026-10-18T15:47:03Z","service":"payment","event":"idempotency_replay","correlation_id":"slow-384ef842-d4d2-452a-94a3-84e654f3f421","scope":"payments:charge","key_hash":"f31712d93472"}
+{"timestamp":"2026-10-18T15:47:03Z","service":"payment","event":"http_request","correlation_id":"slow-384ef842-d4d2-452a-94a3-84e654f3f421","method":"POST","path":"/api/v1/payments","status":201}
+{"timestamp":"2026-10-18T15:47:04Z","service":"payment","event":"http_request","correlation_id":"outage-ed117311-74af-49fc-93e9-adbf81c838ce","method":"POST","path":"/api/v1/payments","status":201}
+{"timestamp":"2026-10-18T15:47:04Z","service":"payment","event":"http_request","correlation_id":"notification-outage-8afcb522-6265-47c5-995d-18bff84468d4","method":"POST","path":"/api/v1/payments","status":201}

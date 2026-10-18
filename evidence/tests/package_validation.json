@@ -1,0 +1,20 @@
+{
+  "finished_at": "2026-10-18T15:47:07.656589+00:00",
+  "result": "PASS",
+  "actual_os": "Linux",
+  "verification": "Private automated Git snapshot and local clean clone; not a student contribution history",
+  "tracked_files": 204,
+  "python_syntax": "PASS",
+  "php_syntax": "PASS",
+  "offline_windows_dependency_resolution": "PASS",
+  "fresh_clone_database_provisioning": "PASS",
+  "fresh_clone_doctor": "PASS",
+  "fresh_clone_full_suite": "PASS",
+  "native_windows_apache_run": false,
+  "excluded": [
+    "runtime configuration/passwords",
+    "logs/caches",
+    "private test runtimes",
+    "Git history"
+  ]
+}

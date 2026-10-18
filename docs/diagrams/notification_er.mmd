@@ -1,0 +1,16 @@
+erDiagram
+  notifications {
+    char36 id PK
+    char36 booking_id UK
+    varchar recipient
+    varchar status
+    int attempts
+    varchar simulation
+  }
+  idempotency_records {
+    varchar scope PK
+    varchar idem_key PK
+    char64 fingerprint
+    int http_status
+    json response_body
+  }

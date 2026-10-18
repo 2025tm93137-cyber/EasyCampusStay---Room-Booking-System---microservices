@@ -1,0 +1,15 @@
+stateDiagram-v2
+  [*] --> PENDING
+  PENDING --> RESERVED: Hold succeeds
+  PENDING --> CANCELLED: No stock
+  RESERVED --> PAYMENT_PENDING
+  PAYMENT_PENDING --> PAID: Charge known
+  PAYMENT_PENDING --> PAYMENT_UNCERTAIN: Timeout or outage
+  PAYMENT_UNCERTAIN --> PAID: Resolve charged
+  PAYMENT_UNCERTAIN --> COMPENSATING: Resolve declined
+  PAYMENT_PENDING --> COMPENSATING: Decline
+  PAID --> CONFIRMED: Confirm hold
+  PAID --> COMPENSATING: Unrecoverable confirmation failure
+  COMPENSATING --> CANCELLED: Refund if charged then release
+  CONFIRMED --> [*]
+  CANCELLED --> [*]

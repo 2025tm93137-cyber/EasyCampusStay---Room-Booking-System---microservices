@@ -1,0 +1,318 @@
+[
+  {
+    "file": "CampusStay_Proposal.pdf",
+    "pages": 1,
+    "main_pages": null,
+    "headings": [
+      {
+        "title": "CampusStay: project proposal",
+        "page": 1
+      },
+      {
+        "title": "Four business services",
+        "page": 1
+      },
+      {
+        "title": "Transaction and assessed challenges",
+        "page": 1
+      },
+      {
+        "title": "Deliverables and boundaries",
+        "page": 1
+      }
+    ]
+  },
+  {
+    "file": "CampusStay_Design_Report.pdf",
+    "pages": 17,
+    "main_pages": 14,
+    "headings": [
+      {
+        "title": "CampusStay: design and implementation report",
+        "page": 1
+      },
+      {
+        "title": "1. Problem, transaction and scope",
+        "page": 1
+      },
+      {
+        "title": "Submission identity",
+        "page": 1
+      },
+      {
+        "title": "2. Business rules and traceability",
+        "page": 2
+      },
+      {
+        "title": "3. Decomposition, deployment and ownership",
+        "page": 3
+      },
+      {
+        "title": "4. Interaction and booking lifecycle",
+        "page": 4
+      },
+      {
+        "title": "5. Data model: Inventory and Reservation",
+        "page": 5
+      },
+      {
+        "title": "6. Data model: Payment and Notification",
+        "page": 6
+      },
+      {
+        "title": "7. Versioned API contract",
+        "page": 7
+      },
+      {
+        "title": "8. Request, errors and observability",
+        "page": 8
+      },
+      {
+        "title": "9. Challenge 1: contested capacity",
+        "page": 9
+      },
+      {
+        "title": "10. Challenge 2: durable idempotency",
+        "page": 10
+      },
+      {
+        "title": "11. Challenge 3C: saga and compensation",
+        "page": 11
+      },
+      {
+        "title": "Supplementary recovery",
+        "page": 11
+      },
+      {
+        "title": "12. Verification and evidence provenance",
+        "page": 12
+      },
+      {
+        "title": "13. Decisions and tradeoffs",
+        "page": 13
+      },
+      {
+        "title": "14. Reproduction, limits and submission",
+        "page": 14
+      },
+      {
+        "title": "References and acknowledgement",
+        "page": 14
+      },
+      {
+        "title": "Appendix A. Actual contributions",
+        "page": 15
+      },
+      {
+        "title": "Appendix B. Personal reflections",
+        "page": 16
+      },
+      {
+        "title": "Appendix C. AI-use declaration",
+        "page": 17
+      }
+    ]
+  },
+  {
+    "file": "CampusStay_Beginner_Windows_Git_to_Video_Guide.pdf",
+    "pages": 18,
+    "main_pages": null,
+    "headings": [
+      {
+        "title": "CampusStay: beginner Windows guide from installation to video",
+        "page": 1
+      },
+      {
+        "title": "1. Understand what you will submit",
+        "page": 1
+      },
+      {
+        "title": "2. Learn the few terms used in the guide",
+        "page": 2
+      },
+      {
+        "title": "3. Prepare folders and software",
+        "page": 2
+      },
+      {
+        "title": "4. Install Git for Windows",
+        "page": 2
+      },
+      {
+        "title": "5. Install Python 3.12, 64-bit",
+        "page": 3
+      },
+      {
+        "title": "6. Install or check XAMPP",
+        "page": 3
+      },
+      {
+        "title": "7. Create your GitHub account",
+        "page": 4
+      },
+      {
+        "title": "8. Extract and check the project folder",
+        "page": 4
+      },
+      {
+        "title": "9. Configure your real Git identity",
+        "page": 5
+      },
+      {
+        "title": "10. Create the local repository and baseline commit",
+        "page": 5
+      },
+      {
+        "title": "11. Create an empty GitHub repository and push",
+        "page": 5
+      },
+      {
+        "title": "12. Create the Python package environment",
+        "page": 6
+      },
+      {
+        "title": "13. Install the supplied dependencies",
+        "page": 6
+      },
+      {
+        "title": "14. Generate local service configuration",
+        "page": 6
+      },
+      {
+        "title": "15. Create databases, users and tables",
+        "page": 7
+      },
+      {
+        "title": "16. Inspect SQL files or use phpMyAdmin import",
+        "page": 7
+      },
+      {
+        "title": "17. Check the environment before startup",
+        "page": 8
+      },
+      {
+        "title": "18. Start the application in Terminal A",
+        "page": 8
+      },
+      {
+        "title": "19. Understand independent startup",
+        "page": 8
+      },
+      {
+        "title": "20. Check each service in the browser",
+        "page": 9
+      },
+      {
+        "title": "21. Make your first booking through the UI",
+        "page": 9
+      },
+      {
+        "title": "22. Demonstrate replay, conflict and failure in the UI",
+        "page": 10
+      },
+      {
+        "title": "23. Use Terminal B for the scripted main flow",
+        "page": 10
+      },
+      {
+        "title": "24. Run Challenge 1: concurrency",
+        "page": 10
+      },
+      {
+        "title": "25. Run Challenge 2: idempotency",
+        "page": 11
+      },
+      {
+        "title": "26. Run Challenge 3C: saga compensation",
+        "page": 11
+      },
+      {
+        "title": "27. Run the full suite and save your Windows evidence",
+        "page": 11
+      },
+      {
+        "title": "28. Inspect the four databases",
+        "page": 11
+      },
+      {
+        "title": "29. Make genuine team contributions using branches",
+        "page": 12
+      },
+      {
+        "title": "30. Commit your real evidence and documentation",
+        "page": 12
+      },
+      {
+        "title": "31. Test a fresh clone before submission",
+        "page": 13
+      },
+      {
+        "title": "32. Complete the report and personal materials",
+        "page": 13
+      },
+      {
+        "title": "33. Prepare the video demonstration",
+        "page": 14
+      },
+      {
+        "title": "34. Install OBS and make a short recording test",
+        "page": 14
+      },
+      {
+        "title": "35. Record the required 8-10 minute video",
+        "page": 14
+      },
+      {
+        "title": "36. Save, upload and check the video link",
+        "page": 15
+      },
+      {
+        "title": "37. Finalise the repository and submit",
+        "page": 15
+      },
+      {
+        "title": "38. Stop and start the application on another day",
+        "page": 16
+      },
+      {
+        "title": "39. Troubleshooting reference",
+        "page": 17
+      },
+      {
+        "title": "40. Files to open when you want to understand the code",
+        "page": 18
+      }
+    ]
+  },
+  {
+    "file": "CampusStay_Demo_Video_Guide.pdf",
+    "pages": 3,
+    "main_pages": null,
+    "headings": [
+      {
+        "title": "CampusStay: 8-10 minute demonstration video guide",
+        "page": 1
+      },
+      {
+        "title": "Before the recording",
+        "page": 1
+      },
+      {
+        "title": "Recording timeline and speaking cues",
+        "page": 1
+      },
+      {
+        "title": "Suggested member handoffs",
+        "page": 3
+      },
+      {
+        "title": "What screenshots and evidence must show",
+        "page": 3
+      },
+      {
+        "title": "Review the complete recording",
+        "page": 3
+      }
+    ]
+  }
+]

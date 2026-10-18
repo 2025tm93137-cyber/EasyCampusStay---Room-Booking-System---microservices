@@ -1,0 +1,30 @@
+sequenceDiagram
+  participant C as Client or UI
+  participant R as Reservation
+  participant I as Inventory
+  participant P as Payment
+  participant N as Notification
+  C->>R: Create booking with key
+  R->>R: Claim key and persist PENDING
+  R->>I: Hold room with stable key
+  I-->>R: HELD and price
+  R->>P: Charge with stable key
+  alt Charge succeeds
+    P-->>R: CHARGED
+    R->>I: Confirm hold
+    R->>R: Persist CONFIRMED
+    R->>N: Send confirmation
+    N-->>R: SENT or FAILED
+    R-->>C: Saved 201 result
+  else Known decline at step 3
+    P-->>R: DECLINED
+    R->>R: Persist COMPENSATING
+    R->>I: Release hold once
+    R->>R: Persist CANCELLED
+    R-->>C: Saved 402 result
+  else Timeout or outage
+    R->>R: Persist PAYMENT_UNCERTAIN
+    R-->>C: Saved 202 acceptance
+    R->>P: Resolve outcome then retry stable key
+    C->>R: GET current booking
+  end

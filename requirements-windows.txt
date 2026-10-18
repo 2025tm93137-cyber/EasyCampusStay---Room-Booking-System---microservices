@@ -1,0 +1,3 @@
+# Native Windows setup: the same application versions, plus Windows console support.
+-r requirements.lock.txt
+colorama==0.4.6; sys_platform == "win32"

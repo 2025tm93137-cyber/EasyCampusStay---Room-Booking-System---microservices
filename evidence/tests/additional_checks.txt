@@ -1,0 +1,7 @@
+Timestamp UTC: 2026-10-18T15:47:00.267486+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python scripts/additional_checks.py
+
+PASS: all 12 cross-database connections denied; four OpenAPI specs and consistent error responses.
+PASS: different keys cannot duplicate a hold, payment or refund; invalid past date creates no booking.
+
+Exit code: 0

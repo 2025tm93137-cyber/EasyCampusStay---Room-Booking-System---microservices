@@ -1,0 +1,160 @@
+{
+  "timestamp": "2026-10-18T15:47:00.591955+00:00",
+  "database_isolation": [
+    {
+      "source": "inventory",
+      "target": "reservation",
+      "result": "DENIED"
+    },
+    {
+      "source": "inventory",
+      "target": "payment",
+      "result": "DENIED"
+    },
+    {
+      "source": "inventory",
+      "target": "notification",
+      "result": "DENIED"
+    },
+    {
+      "source": "reservation",
+      "target": "inventory",
+      "result": "DENIED"
+    },
+    {
+      "source": "reservation",
+      "target": "payment",
+      "result": "DENIED"
+    },
+    {
+      "source": "reservation",
+      "target": "notification",
+      "result": "DENIED"
+    },
+    {
+      "source": "payment",
+      "target": "inventory",
+      "result": "DENIED"
+    },
+    {
+      "source": "payment",
+      "target": "reservation",
+      "result": "DENIED"
+    },
+    {
+      "source": "payment",
+      "target": "notification",
+      "result": "DENIED"
+    },
+    {
+      "source": "notification",
+      "target": "inventory",
+      "result": "DENIED"
+    },
+    {
+      "source": "notification",
+      "target": "reservation",
+      "result": "DENIED"
+    },
+    {
+      "source": "notification",
+      "target": "payment",
+      "result": "DENIED"
+    }
+  ],
+  "api_checks": [
+    {
+      "service": "inventory",
+      "openapi": "PASS",
+      "unknown_path_error": {
+        "error": {
+          "code": "HTTP_ERROR",
+          "message": "Not Found",
+          "details": null
+        }
+      }
+    },
+    {
+      "service": "reservation",
+      "openapi": "PASS",
+      "unknown_path_error": {
+        "error": {
+          "code": "HTTP_ERROR",
+          "message": "Not Found",
+          "details": null
+        }
+      }
+    },
+    {
+      "service": "payment",
+      "openapi": "PASS",
+      "unknown_path_error": {
+        "error": {
+          "code": "HTTP_ERROR",
+          "message": "Not Found",
+          "details": null
+        }
+      }
+    },
+    {
+      "service": "notification",
+      "openapi": "PASS",
+      "unknown_path_error": {
+        "error": {
+          "code": "HTTP_ERROR",
+          "message": "Not Found",
+          "details": null
+        }
+      }
+    }
+  ],
+  "invalid_request": {
+    "error": {
+      "code": "VALIDATION_ERROR",
+      "message": "The request contains invalid fields.",
+      "details": [
+        {
+          "location": [
+            "body",
+            "room_type_id"
+          ],
+          "message": "Input should be a valid UUID, invalid character: found `i` at 1",
+          "type": "uuid_parsing"
+        },
+        {
+          "location": [
+            "body",
+            "stay_date"
+          ],
+          "message": "Field required",
+          "type": "missing"
+        },
+        {
+          "location": [
+            "body",
+            "guest_ref"
+          ],
+          "message": "Field required",
+          "type": "missing"
+        }
+      ]
+    }
+  },
+  "different_keys_same_booking": {
+    "hold_id": "7a5c6c9f-98e3-485a-839b-3796d3045b67",
+    "payment_id": "dcff27a6-2689-4147-bc51-9eccb0651981",
+    "refund_records": [
+      {
+        "id": "04a9584f-5270-4b48-9801-e711066498a9",
+        "amount_minor": 250000
+      }
+    ]
+  },
+  "past_date_request": {
+    "error": {
+      "code": "PAST_STAY_DATE",
+      "message": "The stay date cannot be in the past.",
+      "details": null
+    }
+  }
+}

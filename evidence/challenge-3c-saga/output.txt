@@ -1,0 +1,9 @@
+Timestamp UTC: 2026-10-18T15:46:59.931057+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python scripts/challenge_saga.py
+
+Challenge 3C | 2026-10-18T15:47:00.017611+00:00
+Step 3 declined: PENDING -> RESERVED -> PAYMENT_PENDING -> COMPENSATING -> CANCELLED
+Compensation: room capacity restored to 1, no successful charge, no confirmation.
+PASS: repeated compensation does not over-release; the released room can be booked again.
+
+Exit code: 0

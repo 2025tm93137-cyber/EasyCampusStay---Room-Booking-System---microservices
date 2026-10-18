@@ -1,0 +1,27 @@
+erDiagram
+  bookings ||--o{ booking_steps : records
+  bookings ||--|| idempotency_records : claimed_by
+  bookings {
+    char36 id PK
+    char36 room_type_id
+    date stay_date
+    json request_body
+    varchar status
+    char36 payment_id
+    varchar notification_status
+    json failure_body
+  }
+  booking_steps {
+    bigint id PK
+    char36 booking_id FK
+    varchar from_state
+    varchar to_state
+  }
+  idempotency_records {
+    varchar scope PK
+    varchar idem_key PK
+    char64 fingerprint
+    char36 booking_id FK,UK
+    int http_status
+    json response_body
+  }

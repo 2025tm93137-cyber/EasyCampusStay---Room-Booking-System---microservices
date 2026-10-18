@@ -1,0 +1,3 @@
+-- TEMPLATE: choose this service password, then execute locally as administrator.
+CREATE USER 'cs_inventory'@'127.0.0.1' IDENTIFIED BY 'REPLACE_WITH_THIS_SERVICE_PASSWORD';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `campusstay\_inventory`.* TO 'cs_inventory'@'127.0.0.1';

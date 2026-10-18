@@ -1,0 +1,9 @@
+Timestamp UTC: 2026-10-18T15:46:59.434703+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python scripts/challenge_idempotency.py
+
+Challenge 2 | 2026-10-18T15:46:59.509620+00:00
+Sequential: first + 3 replays are identical; changed payload returns 409.
+Concurrent: 20 identical first requests return the same booking and HTTP 201.
+PASS: one booking, one hold, one charge and one notification per key.
+
+Exit code: 0

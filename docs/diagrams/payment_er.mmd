@@ -1,0 +1,22 @@
+erDiagram
+  payments ||--o| refunds : reverses
+  payments {
+    char36 id PK
+    char36 booking_id UK
+    bigint amount_minor
+    char3 currency
+    varchar simulation
+    varchar status
+  }
+  refunds {
+    char36 id PK
+    char36 payment_id FK,UK
+    bigint amount_minor
+  }
+  idempotency_records {
+    varchar scope PK
+    varchar idem_key PK
+    char64 fingerprint
+    int http_status
+    json response_body
+  }

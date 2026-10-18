@@ -1,0 +1,8 @@
+Timestamp UTC: 2026-10-18T15:46:58.930912+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/venv/bin/python scripts/challenge_concurrency.py
+
+Challenge 1 | 2026-10-18T15:46:59.031960+00:00
+Parallel requests=20, room capacity=5, HTTP results={409: 15, 201: 5}
+PASS: exactly N confirmed; remaining requests rejected; no negative or excess allocation.
+
+Exit code: 0

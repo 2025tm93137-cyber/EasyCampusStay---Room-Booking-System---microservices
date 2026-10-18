@@ -1,0 +1,2 @@
+{"timestamp":"2026-10-18T15:46:59Z","service":"payment","event":"http_request","correlation_id":"sequential-d96792f0-0176-4a23-b337-66cf33611015","method":"POST","path":"/api/v1/payments","status":201}
+{"timestamp":"2026-10-18T15:46:59Z","service":"payment","event":"http_request","correlation_id":"simultaneous-ad5f4ec4-e022-4dc5-98d1-339913a4feb5","method":"POST","path":"/api/v1/payments","status":201}

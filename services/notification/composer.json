@@ -1,0 +1,12 @@
+{
+  "name": "campusstay/notification",
+  "description": "Independent notification mock REST service",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "ext-json": "*"
+  },
+  "license": "proprietary"
+}

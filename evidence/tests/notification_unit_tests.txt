@@ -1,0 +1,17 @@
+Timestamp UTC: 2026-10-18T15:46:57.479535+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/php services/notification/tests/rules_test.php
+
+{
+    "service": "notification",
+    "language": "PHP",
+    "tests": 4,
+    "failures": 0,
+    "cases": [
+        "BR8 rejects PENDING",
+        "BR8 rejects PAID",
+        "BR8 rejects CANCELLED",
+        "BR8 accepts CONFIRMED"
+    ]
+}
+
+Exit code: 0

@@ -1,0 +1,23 @@
+Timestamp UTC: 2026-10-18T15:46:57.465971+00:00
+Command: /workspace/scratch/e0c4d24e4ac6/option_b_runtime/php services/payment/tests/rules_test.php
+
+{
+    "service": "payment",
+    "language": "PHP",
+    "tests": 10,
+    "failures": 0,
+    "cases": [
+        "BR6 rejects invalid amount case 1",
+        "BR6 rejects invalid amount case 2",
+        "BR6 rejects invalid amount case 3",
+        "BR6 rejects invalid amount case 4",
+        "BR6 rejects invalid amount case 5",
+        "BR6 accepts integer 1",
+        "BR6 accepts integer 250000",
+        "BR7 rejects refund of declined payment",
+        "BR7 accepts CHARGED",
+        "BR7 accepts REFUNDED"
+    ]
+}
+
+Exit code: 0

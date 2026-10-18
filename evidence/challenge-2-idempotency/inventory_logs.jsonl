@@ -1,0 +1,4 @@
+{"timestamp":"2026-10-18T15:46:59.567085+00:00","service":"inventory","event":"http_request","correlation_id":"sequential-d96792f0-0176-4a23-b337-66cf33611015","method":"POST","path":"/api/v1/holds","status":201}
+{"timestamp":"2026-10-18T15:46:59.591713+00:00","service":"inventory","event":"http_request","correlation_id":"sequential-d96792f0-0176-4a23-b337-66cf33611015","method":"POST","path":"/api/v1/holds/a76682a5-a8b6-4ad5-bf37-97186ec6338b/confirm","status":200}
+{"timestamp":"2026-10-18T15:46:59.779759+00:00","service":"inventory","event":"http_request","correlation_id":"simultaneous-ad5f4ec4-e022-4dc5-98d1-339913a4feb5","method":"POST","path":"/api/v1/holds","status":201}
+{"timestamp":"2026-10-18T15:46:59.808540+00:00","service":"inventory","event":"http_request","correlation_id":"simultaneous-ad5f4ec4-e022-4dc5-98d1-339913a4feb5","method":"POST","path":"/api/v1/holds/4e6e2cb6-2aeb-44c0-9e30-f16bad672924/confirm","status":200}

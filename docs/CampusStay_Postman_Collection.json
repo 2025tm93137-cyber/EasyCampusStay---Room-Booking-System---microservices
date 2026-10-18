@@ -1,0 +1,303 @@
+{
+  "info": {
+    "name": "CampusStay Python-PHP API demonstration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Synthetic localhost demo; use Create room inventory before booking. No real payments or messages."
+  },
+  "variable": [
+    {
+      "key": "inventory_url",
+      "value": "http://127.0.0.1:8101"
+    },
+    {
+      "key": "reservation_url",
+      "value": "http://127.0.0.1:8102"
+    },
+    {
+      "key": "payment_url",
+      "value": "http://127.0.0.1:8103"
+    },
+    {
+      "key": "notification_url",
+      "value": "http://127.0.0.1:8104"
+    },
+    {
+      "key": "room_type_id",
+      "value": ""
+    },
+    {
+      "key": "stay_date",
+      "value": ""
+    },
+    {
+      "key": "booking_key",
+      "value": ""
+    },
+    {
+      "key": "booking_id",
+      "value": ""
+    },
+    {
+      "key": "correlation_id",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('correlation_id')) pm.collectionVariables.set('correlation_id', pm.variables.replaceIn('{{$randomUUID}}'));"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Health inventory",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          }
+        ],
+        "url": "{{inventory_url}}/health"
+      }
+    },
+    {
+      "name": "Health reservation",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          }
+        ],
+        "url": "{{reservation_url}}/health"
+      }
+    },
+    {
+      "name": "Health payment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          }
+        ],
+        "url": "{{payment_url}}/health"
+      }
+    },
+    {
+      "name": "Health notification",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          }
+        ],
+        "url": "{{notification_url}}/health"
+      }
+    },
+    {
+      "name": "Create room inventory",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{$randomUUID}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{inventory_url}}/api/v1/room-types",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman Demo\",\n  \"capacity\": 5,\n  \"price_minor\": 250000,\n  \"currency\": \"INR\",\n  \"dates\": [\n    \"{{stay_date}}\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const day=new Date(); day.setUTCDate(day.getUTCDate()+7);",
+              "pm.collectionVariables.set('stay_date',day.toISOString().slice(0,10));",
+              "pm.collectionVariables.set('booking_key',pm.variables.replaceIn('{{$randomUUID}}'));",
+              "pm.collectionVariables.set('correlation_id',pm.variables.replaceIn('{{$randomUUID}}'));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Created inventory',()=>pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('room_type_id',pm.response.json().room_type_id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{booking_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{reservation_url}}/api/v1/bookings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"room_type_id\": \"{{room_type_id}}\",\n  \"stay_date\": \"{{stay_date}}\",\n  \"guest_ref\": \"postman-demo\",\n  \"recipient\": \"guest@example.test\",\n  \"payment_mode\": \"success\",\n  \"notification_mode\": \"success\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Confirmed booking',()=>pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('booking_id',pm.response.json().booking_id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Replay same booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{booking_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{reservation_url}}/api/v1/bookings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"room_type_id\": \"{{room_type_id}}\",\n  \"stay_date\": \"{{stay_date}}\",\n  \"guest_ref\": \"postman-demo\",\n  \"recipient\": \"guest@example.test\",\n  \"payment_mode\": \"success\",\n  \"notification_mode\": \"success\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Read current booking",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          }
+        ],
+        "url": "{{reservation_url}}/api/v1/bookings/{{booking_id}}"
+      }
+    },
+    {
+      "name": "Read booking state transitions",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          }
+        ],
+        "url": "{{reservation_url}}/api/v1/bookings/{{booking_id}}/steps"
+      }
+    },
+    {
+      "name": "Force payment decline with a new key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Correlation-ID",
+            "value": "{{correlation_id}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "decline-{{booking_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{reservation_url}}/api/v1/bookings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"room_type_id\": \"{{room_type_id}}\",\n  \"stay_date\": \"{{stay_date}}\",\n  \"guest_ref\": \"postman-demo\",\n  \"recipient\": \"guest@example.test\",\n  \"payment_mode\": \"decline\",\n  \"notification_mode\": \"success\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Mock decline',()=>pm.response.to.have.status(402));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

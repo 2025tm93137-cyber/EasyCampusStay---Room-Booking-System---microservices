@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "actual_os": "Linux",
+  "browser": "Chromium",
+  "checks": [
+    "four healthy services",
+    "sample room creation",
+    "confirmed booking",
+    "notification retry",
+    "safe replay",
+    "changed-payload 409",
+    "declined-payment compensation",
+    "slow-payment 202 followed by confirmed GET",
+    "mobile layout without overflow",
+    "no JavaScript page errors"
+  ],
+  "finished_at": "2026-10-18T14:50:05.270Z"
+}

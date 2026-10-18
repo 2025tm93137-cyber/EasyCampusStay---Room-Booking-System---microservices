@@ -1,0 +1,30 @@
+erDiagram
+  room_types ||--o{ room_stock : has
+  room_stock ||--o{ holds : allocates
+  room_types {
+    char36 id PK
+    varchar name
+    bigint price_minor
+    char3 currency
+  }
+  room_stock {
+    char36 room_type_id PK,FK
+    date stay_date PK
+    int capacity
+    int available
+  }
+  holds {
+    char36 id PK
+    char36 booking_id UK
+    char36 room_type_id FK
+    date stay_date FK
+    varchar status
+    bigint amount_minor
+  }
+  idempotency_records {
+    varchar scope PK
+    varchar idem_key PK
+    char64 fingerprint
+    int http_status
+    json response_body
+  }
