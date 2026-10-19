@@ -1,0 +1,231 @@
+EASY STAY -- SIMPLER BOOKING SCREEN
+=================================
+
+This is an update for your EXISTING Option B project. Install it into:
+C:\Projects\campusstay_option_b
+
+It changes the browser interface and its documentation. Your Python/PHP
+services, existing database contents, passwords, virtual environment,
+Windows worker fix and terminal scripts continue using their existing files.
+Do not create a second project, rename databases, or run database setup again
+just for this interface update.
+
+PART 1 -- INSTALL THE UPDATE ON WINDOWS
+--------------------------------------
+1. Download Easy_Stay_Simple_UI_Update.zip to your Downloads folder.
+
+2. Stop the existing UI before replacing its files:
+   - If you started the UI in its own PowerShell window, press Ctrl+C there.
+     Keep Inventory, Reservation, Payment and Notification running.
+   - If you use scripts\run.py to start everything in one window, press
+     Ctrl+C in that window and wait for it to finish stopping its services.
+   - Keep XAMPP MySQL running in either case.
+
+3. Open another PowerShell window and enter:
+
+   Set-Location 'C:\Projects\campusstay_option_b'
+
+4. Make a backup outside the project. Run this once before extracting:
+
+   Copy-Item -LiteralPath '.\ui' -Destination '..\campusstay_ui_backup_before_easy_stay' -Recurse -ErrorAction Stop
+
+   This private backup can contain local configuration. Keep it outside Git
+   and do not upload it. If that backup folder already exists, keep the
+   existing backup and use a different backup folder name for a new copy.
+
+5. Extract the update into your EXISTING project folder:
+
+   Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\Easy_Stay_Simple_UI_Update.zip" -DestinationPath 'C:\Projects\campusstay_option_b' -Force
+
+   The ZIP contains an ui folder directly. The resulting file should be:
+   C:\Projects\campusstay_option_b\ui\public\index.php
+   It must not become ui\ui\public\index.php.
+
+6. Restart with the SAME launch method you were already using.
+
+   A. If the four service terminals are still running, start only the UI:
+
+   .\.venv\Scripts\python.exe ui\run.py
+
+   B. If you stopped the combined launcher, start the combined launcher:
+
+   .\.venv\Scripts\python.exe scripts\run.py
+
+   Choose A or B. Do not run both methods together: they use the same ports.
+
+7. Open http://127.0.0.1:8180/ and press Ctrl+F5 once.
+   You should see Easy Stay and two tabs: Book a room / Service tests.
+   If you still see the old screen, check the extraction path in step 5.
+
+PART 2 -- MAKE A NORMAL BOOKING
+-------------------------------
+1. Stay on the Book a room tab.
+2. Keep the suggested future check-in date.
+3. Click Add sample rooms ONCE.
+   Default: a new Easy Stay Deluxe room type, five rooms for the chosen
+   date, INR 2500 each. The new room type is selected automatically.
+   Expect: 5 of 5 rooms available. Your stay shows the selected price.
+   Adding again creates another room type, rather than refilling this one.
+4. Keep demo-guest-01 and guest@example.test, or use another made-up guest
+   reference and another example.test email address.
+5. Click Confirm booking ONCE. Wait for its response.
+6. Under Your booking, expect:
+   - Booking confirmed and CONFIRMED
+   - A booking ID
+   - Booking total INR 2500
+   - Demo payment successful
+   - Demo notification sent
+   - Remaining availability 4 of 5
+7. Keep the full booking ID. Refresh this booking checks the same booking.
+   Confirm booking starts ANOTHER booking, using another room.
+
+If you see Sold out for this date, the selected stock is exhausted.
+Choose another room with stock on this date, or click Add sample rooms.
+The number in Room setup is how many rooms to CREATE next; it is not the
+remaining availability. The Book a room tab shows the remaining count.
+
+If you see No rooms set up for this date, those rooms were created for a
+different date. Use that date or add sample rooms for your selected date.
+
+If the result could not be read because of a network problem, the main
+button becomes Retry same booking. This repeats the original key and
+details to avoid creating another booking after an uncertain response.
+
+PART 3 -- WHERE THE OLD CONTROLS WENT
+------------------------------------
+Old control                         New location
+Prepare a stay / Create inventory   Book a room -> Add sample rooms
+Change room name/capacity/price     Service tests -> Room setup
+Stay date                          Book a room -> Check-in date
+Book room                          Book a room -> Confirm booking
+Booking inspector / status         Book a room -> Your booking
+Existing booking ID lookup         Book a room -> Already have a booking ID?
+Service health cards               Service tests -> Check the four services
+Payment/notification scenario      Service tests -> Choose a booking scenario
+Replay and changed-payload test    Service tests -> Repeat the last request
+Workflow and raw JSON              Service tests -> Inspect the booking
+
+PART 4 -- STEP 22: REPLAY, CONFLICT AND FAILURE
+----------------------------------------------
+First complete one normal booking in THIS browser page.
+
+1. Open Service tests. Click Replay original request.
+   Expect the SAME original HTTP status/body and the SAME booking ID.
+   For a normal successful booking the original HTTP status is 201.
+   Return to Book a room: availability should still be 4 of 5.
+   A replay is not expected to return 409.
+
+2. Click Test changed-payload conflict.
+   Expect HTTP 409. This is the deliberately changed guest reference with
+   the same request key, so the rejection is the correct test result.
+
+3. Choose Declined payment. Click Go to booking, then Confirm booking.
+   This is a NEW booking request. Expect Booking cancelled / CANCELLED.
+   Its held room is released, so availability returns to the value before
+   this attempt. A deliberate payment decline is expected in this test.
+
+4. Open Service tests. Choose Slow successful payment. Click Go to booking
+   and Confirm booking. Expect HTTP 202 in the original API response.
+   Wait for Your booking to show CONFIRMED. A later GET reports the current
+   state while the original POST response stays 202.
+
+5. To test notification retry, select Successful payment and Fail once,
+   then retry. Go to booking and make one new booking. Expect CONFIRMED
+   and Demo notification sent. Inspect notification shows attempts = 2.
+
+6. Click Reset to normal when you finish the failure scenarios.
+   A non-default scenario is also clearly shown beside Confirm booking.
+
+Replay belongs to the last booking request in this loaded browser page.
+Refreshing the whole page clears that temporary request key from the UI.
+Existing bookings remain in the databases and can be found by booking ID.
+Looking up a booking does not recreate its original browser request.
+
+PART 5 -- STEPS 23, 24 AND 25: USE A SEPARATE POWERSHELL WINDOW
+------------------------------------------------------------
+Keep the four service terminals running. Keep the UI running if you want
+to view it, too. Open ONE additional PowerShell window for these scripts.
+They create their OWN test inventory; a sold-out room in the UI does not
+prevent these tests. Do not enter a UI booking ID into these commands.
+
+First enter your project folder:
+
+Set-Location 'C:\Projects\campusstay_option_b'
+
+23. Scripted main booking and notification retry:
+
+Get-Date -Format o
+.\.venv\Scripts\python.exe scripts\e2e.py
+
+Expected: PASS for room reservation, mock payment, confirmation and the
+notification failing once before being sent. Evidence: evidence\tests\e2e.json
+
+24. Twenty simultaneous NEW booking attempts for five rooms:
+
+Get-Date -Format o
+.\.venv\Scripts\python.exe scripts\challenge_concurrency.py --requests 20 --capacity 5
+
+Expected: exactly five HTTP 201 successes and fifteen HTTP 409 rejections,
+followed by PASS. The fifteen rejections are REQUIRED correct behaviour.
+Remaining stock is zero; no negative stock or excess bookings.
+Evidence: evidence\challenge-1-concurrency\results.json and database_state.json
+
+25. Sequential and simultaneous repeats of the SAME request:
+
+Get-Date -Format o
+.\.venv\Scripts\python.exe scripts\challenge_idempotency.py
+
+Expected: PASS. Same-key/same-payload replays return the same response.
+A changed payload gets HTTP 409. Twenty simultaneous identical first
+requests create one booking, hold, charge and notification for that request
+group. The script has separate test groups, so do not expect the entire
+database to contain only one historical booking.
+Evidence: evidence\challenge-2-idempotency
+
+Run these commands one at a time. If one fails, save its full output and
+investigate it before claiming PASS. Open evidence paths in File Explorer;
+do not enter a bare folder path or SQL file as a PowerShell command.
+
+Step 26 (saga compensation) and step 27 (full suite) are still required by
+the existing guide. Before step 27, stop application services because the
+full suite starts and stops its own processes. Keep MySQL running.
+
+PART 6 -- GIT AND SUBMISSION
+-----------------------------
+The update contains source files with this structure:
+
+ui/public/index.php          Page layout and Easy Stay display name
+ui/public/assets/app.js      Browser calls and screen behaviour
+ui/public/assets/style.css   Colours, spacing and mobile layout
+ui/README.md                 Technical notes
+EASY_STAY_START_HERE.txt      This beginner guide
+docs/easy_stay_ui_validation.json  Actual verification results for this update
+
+After reviewing the actual changes, you can save them in your existing
+Git repository. First inspect your working tree:
+
+git status
+git diff -- ui
+
+Select only the files you reviewed. For example:
+
+git add ui/public/index.php ui/public/assets/app.js ui/public/assets/style.css ui/README.md EASY_STAY_START_HERE.txt docs/easy_stay_ui_validation.json
+git diff --staged --stat
+git commit -m "Simplify booking interface and display Easy Stay branding"
+git push
+
+Keep accurate disclosure of AI assistance. Review the code, understand the
+API calls, test it on your own Windows PC and describe your team's actual
+work. A UI redesign cannot guarantee a plagiarism score or replace the
+required explanations, genuine contributions, report, challenges or video.
+
+Easy Stay is the display name. Your folder and databases intentionally keep
+their existing configured CampusStay names so this update needs no data
+migration. In the final report, use Easy Stay consistently and explain once
+that CampusStay was the earlier development name. Existing technical paths
+can retain those names. Re-record UI demonstrations after this update.
+
+Verification supplied with this update records its ACTUAL operating system.
+It does not replace your team's own Windows execution and video evidence.
+After any source changes, run step 27 again before final submission so your
+Windows run_summary.json records the current source hashes and results.

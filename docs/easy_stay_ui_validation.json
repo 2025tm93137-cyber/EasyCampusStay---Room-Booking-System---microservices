@@ -1,0 +1,33 @@
+{
+  "result": "PASS",
+  "actual_os": "Linux",
+  "native_windows_run": false,
+  "browser": "Chromium",
+  "checks": [
+    "Easy Stay default booking tab; technical controls hidden; four healthy services",
+    "Keyboard-accessible tabs",
+    "One-click sample room creation and price preview",
+    "Normal booking: HTTP 201, confirmation, ID, demo payment and notification; stock decremented once",
+    "Same-key replay retains original booking and stock; changed payload gets HTTP 409",
+    "Decline scenario is visibly flagged; cancellation explains compensation; stock restored",
+    "Fail-once notification retries and sends on attempt two",
+    "Slow payment original HTTP 202 preserved while current GET state becomes confirmed",
+    "Missing-date inventory explains next action and disables new booking",
+    "Sold-out stock clearly labelled; new booking disabled; replay remains safe",
+    "Lost response after server creates booking: retry uses original key/payload and consumes only one room",
+    "Existing booking lookup; unknown booking does not overwrite the previous receipt",
+    "Booking and test tabs fit mobile widths 390px and 320px without horizontal overflow",
+    "No JavaScript page errors"
+  ],
+  "source_sha256": {
+    "ui/public/index.php": "9eef820fabc2356102f936c78b6902fbb2a61695ed0fc23b2486b7b983b261b4",
+    "ui/public/assets/app.js": "9ba3b6859200eeee49aad50d84fc6f0b4f4174a6d36d73331c4e84d43c13334a",
+    "ui/public/assets/style.css": "61ad08c85898cba39f60452ed8e6a75ef7a1bf47735cfd4c352fa2e0cf1b2509"
+  },
+  "finished_at": "2026-10-18T19:55:11.492Z",
+  "existing_scripts": {
+    "e2e.py": "PASS",
+    "challenge_concurrency.py": "PASS: 20 requests, capacity 5",
+    "challenge_idempotency.py": "PASS"
+  }
+}

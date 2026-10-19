@@ -76,8 +76,10 @@ def main():
                 sources[str(file.relative_to(ROOT))]=hashlib.sha256(file.read_bytes()).hexdigest()
     version=query('inventory','SELECT VERSION() AS version')[0]['version']
     php_version=subprocess.check_output([php,'-r','echo PHP_VERSION;'],text=True).strip()
+    worker_counts = {name: (1 if os.name == 'nt' else max(1, int(dotenv_values(ROOT/'services'/name/'.env').get('WORKERS', '1')))) for name in ('inventory', 'reservation')}
+    worker_summary = next(iter(worker_counts.values())) if len(set(worker_counts.values())) == 1 else worker_counts
     save_evidence('tests','run_summary.json',{'finished_at':stamp(),'result':'PASS','commands':commands,
-        'python_workers_per_service':2,'php_runtime':'XAMPP Apache, 32 threads per service' if os.name=='nt' else 'PHP development server, 4 workers per service',
+        'python_workers_per_service':worker_summary,'python_worker_counts':worker_counts,'php_runtime':'XAMPP Apache, 32 threads per service' if os.name=='nt' else 'PHP development server, 4 workers per service',
         'database_engine':version,'python_version':platform.python_version(),'php_version':php_version,
         'business_rule_tests':40,'launcher_configuration_tests':9,'actual_os':platform.system(),
         'native_windows_run':os.name=='nt','source_sha256':sources})
