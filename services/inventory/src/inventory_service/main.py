@@ -9,7 +9,10 @@ from . import repository
 
 app = make_app('CampusStay Inventory Service')
 
-
+# Defines the validation rules for creating a room type.
+# Extra fields are rejected to prevent unexpected input.
+# Capacity, price, currency, and dates are validated before
+# the request reaches the database layer.
 class RoomTypeCreate(BaseModel):
     model_config = ConfigDict(extra='forbid')
     name: str = Field(min_length=1, max_length=80)
@@ -56,6 +59,8 @@ def list_room_types():
 
 @app.post('/api/v1/room-types', status_code=201, response_model=RoomTypeResponse, tags=['Room inventory'])
 def create_room_type(payload: RoomTypeCreate, key: IdempotencyKey, request: Request):
+    # Reuse the result of a previous request with the same
+    # idempotency key to avoid duplicate room type creation.
     def create(conn):
         return 201, repository.create_room_type(conn, payload)
     status, body = local_idempotent('room-types:create', key, payload.model_dump(mode='json'),
@@ -75,6 +80,8 @@ def availability(room_type_id: UUID, stay_date: date):
 
 @app.post('/api/v1/holds', status_code=201, response_model=HoldResponse, tags=['Room holds'])
 def reserve(payload: HoldCreate, key: IdempotencyKey, request: Request):
+    # Create a room hold through the repository layer.
+    # Idempotency prevents duplicate holds when the same request is retried.
     status, body = local_idempotent('holds:create', key, payload.model_dump(mode='json'),
                                   lambda conn: (201, repository.reserve(conn, **payload.model_dump())),
                                   request.state.correlation_id)
@@ -101,6 +108,8 @@ def release(booking_id: UUID, key: IdempotencyKey, request: Request):
 
 
 def change_hold(booking_id, action, key, request):
+    # Confirm or release an existing hold through the repository.
+    # The idempotency key helps make retries safe.
     status, body = local_idempotent('holds:' + action, key, {'booking_id': str(booking_id)},
                                   lambda conn: (200, repository.change_hold(conn, booking_id, action)),
                                   request.state.correlation_id)

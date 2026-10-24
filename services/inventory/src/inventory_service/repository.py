@@ -2,7 +2,7 @@ from uuid import uuid4
 from .platform import BusinessError
 from .rules import require_capacity, require_confirmable, valid_stay_date
 
-
+# Create a room type and initialize its inventory for the requested dates.
 def create_room_type(conn, payload):
     room_id = uuid4()
     conn.execute('INSERT INTO room_types(id,name,price_minor,currency) VALUES (%s,%s,%s,%s)',
@@ -13,7 +13,7 @@ def create_room_type(conn, payload):
                      'VALUES (%s,%s,%s,%s)', (room_id, day, payload.capacity, payload.capacity))
     return {'room_type_id': str(room_id), **payload.model_dump(mode='json')}
 
-
+# Reserve one unit of inventory for a booking by creating a room hold.
 def reserve(conn, booking_id, room_type_id, stay_date):
     valid_stay_date(stay_date)
     # Different Idempotency-Keys still cannot create two holds for one booking.
@@ -38,7 +38,7 @@ def reserve(conn, booking_id, room_type_id, stay_date):
     row = conn.execute('SELECT * FROM holds WHERE id=%s', (hold_id,)).fetchone()
     return hold_body(row)
 
-
+# Convert a database hold record into a JSON-friendly response dictionary.
 def hold_body(row):
     return {k: (str(v) if k in {'id','booking_id','room_type_id','stay_date'} else v)
             for k, v in row.items() if k != 'created_at'}
