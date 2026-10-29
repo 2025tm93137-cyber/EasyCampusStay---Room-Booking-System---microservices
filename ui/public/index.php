@@ -18,13 +18,13 @@ header('Cache-Control: no-store');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="<?=htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8')?>">
-    <title>Easy Campus Stay | Simple hotel booking</title>
+    <title>Easy Campus Stay | Simple room booking</title>
     <link rel="stylesheet" href="/assets/style.css?v=easystay-1">
     <script src="/assets/app.js?v=easystay-1" defer></script>
 </head>
 <body>
 <header class="topbar">
-    <a class="brand" href="/" aria-label="Easy Campus Stay home"><span class="brand-mark">es<span>.</span></span><span>Easy Campus Stay<small>Simple hotel booking</small></span></a>
+    <a class="brand" href="/" aria-label="Easy Campus Stay home"><span class="brand-mark">es<span>.</span></span><span>Easy Campus Stay<small>Simple room booking</small></span></a>
     <span class="demo-badge"><span class="dot"></span> Practice booking · Demo payments</span>
 </header>
 <main>
@@ -37,7 +37,7 @@ header('Cache-Control: no-store');
     <section id="page-booking" role="tabpanel" aria-labelledby="tab-booking">
         <section class="intro">
             <div><p class="eyebrow">A ROOM. A NIGHT. ALL SORTED.</p><h1>Your next stay,<br>made easy.</h1><p>Choose a room, add a guest reference, and book.<br class="desktop-break"> We will show you what happens at every step.</p></div>
-            <div class="intro-note"><span class="intro-symbol" aria-hidden="true">1</span><div><strong>One room for one night</strong><p>A small hotel booking demo.<br>No real payment or email is sent.</p></div></div>
+            <div class="intro-note"><span class="intro-symbol" aria-hidden="true">1</span><div><strong>One room for one night</strong><p>A small room booking demo.<br>No real payment or email is sent.</p></div></div>
         </section>
         <div class="system-line"><span id="system-status">Checking booking services…</span><button id="open-services" class="link-button" type="button">View services</button></div>
         <div class="booking-layout">
