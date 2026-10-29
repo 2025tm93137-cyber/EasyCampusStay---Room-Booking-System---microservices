@@ -2,29 +2,29 @@
   "inventory": {
     "stock": [
       {
-        "room_type_id": "da294db7-f0a3-43fb-9302-1dc071b4803d",
-        "stay_date": "2026-10-26",
+        "room_type_id": "5bb99e90-ad06-432c-9336-1a9a76dff192",
+        "stay_date": "2026-11-04",
         "capacity": 1,
         "available": 1
       }
     ],
     "holds": [
       {
-        "id": "bcff1e42-e72e-4287-b5fa-5228701a4f6b",
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
-        "room_type_id": "da294db7-f0a3-43fb-9302-1dc071b4803d",
-        "stay_date": "2026-10-26",
+        "id": "1b289bfb-1d95-456a-9b89-2a903ff422d6",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
+        "room_type_id": "5bb99e90-ad06-432c-9336-1a9a76dff192",
+        "stay_date": "2026-11-04",
         "status": "RELEASED",
         "amount_minor": 250000,
         "currency": "INR",
-        "created_at": "2026-10-18 19:34:06.947901"
+        "created_at": "2026-10-28 15:59:11.920340"
       }
     ]
   },
   "reservation": {
     "bookings": [
       {
-        "id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "status": "CANCELLED",
         "amount_minor": 250000,
         "payment_id": null,
@@ -33,50 +33,50 @@
     ],
     "steps": [
       {
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "from_state": null,
         "to_state": "PENDING",
-        "created_at": "2026-10-18 19:34:06.557526"
+        "created_at": "2026-10-28 15:59:11.221823"
       },
       {
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "from_state": "PENDING",
         "to_state": "RESERVED",
-        "created_at": "2026-10-18 19:34:06.968588"
+        "created_at": "2026-10-28 15:59:11.947730"
       },
       {
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "from_state": "RESERVED",
         "to_state": "PAYMENT_PENDING",
-        "created_at": "2026-10-18 19:34:06.989958"
+        "created_at": "2026-10-28 15:59:11.994606"
       },
       {
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "from_state": "PAYMENT_PENDING",
         "to_state": "COMPENSATING",
-        "created_at": "2026-10-18 19:34:07.392422"
+        "created_at": "2026-10-28 15:59:12.682427"
       },
       {
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "from_state": "COMPENSATING",
         "to_state": "CANCELLED",
-        "created_at": "2026-10-18 19:34:07.765883"
+        "created_at": "2026-10-28 15:59:13.399295"
       }
     ],
     "idempotency": [
       {
         "scope": "bookings:create",
-        "idem_key": "saga-decline-6eb291a2-aecd-4d37-82a8-899d52b0ef15",
-        "fingerprint": "e2c4c823e0b0ea9a15e05865aaa9c7466d5b8c26ea9b43201240b296f8bdecd5",
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "idem_key": "saga-decline-24e8e101-7f1c-42ea-9fa6-29932211b22f",
+        "fingerprint": "ec534525c3b22bc591b21ce54eab440772c31d3e6640f4f128882cdd3e88af62",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "http_status": 402,
         "response_body": {
           "error": {
             "code": "PAYMENT_DECLINED",
             "message": "The mock payment gateway declined the payment.",
             "details": {
-              "payment_id": "e84e4285-1899-4dcf-b2f0-bc3a6b14b2bb",
-              "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58"
+              "payment_id": "dbebef47-cbd2-4772-8e8b-089bc65ae99b",
+              "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177"
             }
           }
         }
@@ -86,13 +86,13 @@
   "payment": {
     "payments": [
       {
-        "id": "e84e4285-1899-4dcf-b2f0-bc3a6b14b2bb",
-        "booking_id": "6ec3aa09-5595-4457-af94-42dc05844a58",
+        "id": "dbebef47-cbd2-4772-8e8b-089bc65ae99b",
+        "booking_id": "ea3bd79b-0365-4665-80ad-deec3a1b2177",
         "amount_minor": 250000,
         "currency": "INR",
         "simulation": "decline",
         "status": "DECLINED",
-        "created_at": "2026-10-18 19:34:07.357362"
+        "created_at": "2026-10-28 15:59:12.643497"
       }
     ],
     "refunds": []
