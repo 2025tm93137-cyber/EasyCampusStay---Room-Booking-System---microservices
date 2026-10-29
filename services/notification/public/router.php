@@ -1,5 +1,5 @@
 <?php
-// PHP development-server router; Apache uses FallbackResource in its own config.
+// PHP route code changes done by Ambuj development-server router; Apache uses FallbackResource in its own config.
 $path=parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
 $candidate=realpath(__DIR__.$path);
 $root=realpath(__DIR__);
