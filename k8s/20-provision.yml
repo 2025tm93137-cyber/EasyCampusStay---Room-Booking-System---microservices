@@ -8,6 +8,7 @@ spec:
   activeDeadlineSeconds: 300
   template:
     spec:
+      enableServiceLinks: false
       restartPolicy: OnFailure
       containers:
       - name: provision
@@ -16,6 +17,8 @@ spec:
         env:
         - name: DB_HOST
           value: db
+        - name: DB_PORT
+          value: '3306'
         - name: MARIADB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
