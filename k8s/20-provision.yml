@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init
+  namespace: easy-campus-stay
+spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 300
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: provision
+        image: easystay/provision:assignment2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_HOST
+          value: db
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: MARIADB_ROOT_PASSWORD
+        - name: INVENTORY_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: INVENTORY_DB_PASSWORD
+        - name: RESERVATION_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: RESERVATION_DB_PASSWORD
+        - name: PAYMENT_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: PAYMENT_DB_PASSWORD
+        - name: NOTIFICATION_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: NOTIFICATION_DB_PASSWORD

@@ -1,0 +1,67 @@
+--- a/ui/bootstrap.php
++++ b/ui/bootstrap.php
+@@ -8,7 +8,9 @@
+         [$key,$raw]=explode('=',$line,2);$raw=trim($raw);
+         $values[trim($key)]=str_starts_with($raw,'"') ? json_decode($raw,true,512,JSON_THROW_ON_ERROR) : $raw;
+     }
+-    foreach ($values as $key=>$value) if (getenv($key)!==false) $values[$key]=getenv($key);
++    foreach (['INVENTORY_URL','RESERVATION_URL','PAYMENT_URL','NOTIFICATION_URL','UI_ALLOWED_UPSTREAM_HOSTS'] as $key) {
++        if (getenv($key)!==false) $values[$key]=getenv($key);
++    }
+     return $values;
+ }
+ 
+@@ -26,8 +28,9 @@
+     $values=ui_settings();
+     $base=$values[strtoupper($service).'_URL'] ?? '';
+     $parts=parse_url($base);
+-    if (!in_array($parts['host'] ?? '',['127.0.0.1','localhost'],true) || ($parts['scheme'] ?? '')!=='http') {
+-        throw new RuntimeException('Configure the local service URL in ui/.env.');
++    $allowed=array_map('trim',explode(',', $values['UI_ALLOWED_UPSTREAM_HOSTS'] ?? '127.0.0.1,localhost'));
++    if (!in_array($parts['host'] ?? '',$allowed,true) || ($parts['scheme'] ?? '')!=='http' || isset($parts['user']) || isset($parts['pass'])) {
++        throw new RuntimeException('Configure the service URL and UI_ALLOWED_UPSTREAM_HOSTS.');
+     }
+     $cid='ui-'.bin2hex(random_bytes(8));
+     $headers=['Content-Type: application/json','X-Correlation-ID: '.$cid];
+@@ -37,7 +40,7 @@
+         CURLOPT_CONNECTTIMEOUT=>2,CURLOPT_TIMEOUT=>25,CURLOPT_FOLLOWLOCATION=>false,CURLOPT_PROXY=>'']);
+     if ($payload!==null) curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($payload,JSON_THROW_ON_ERROR));
+     $raw=curl_exec($curl);$status=(int)curl_getinfo($curl,CURLINFO_HTTP_CODE);
+-    if ($raw===false) { curl_close($curl); return ['status'=>503,'body'=>['error'=>['code'=>'SERVICE_UNAVAILABLE','message'=>ucfirst($service).' is not reachable. Start its terminal and retry.','details'=>null]],'correlation_id'=>$cid]; }
++    if ($raw===false) { curl_close($curl); return ['status'=>503,'body'=>['error'=>['code'=>'SERVICE_UNAVAILABLE','message'=>ucfirst($service).' is not reachable. Check its container or service terminal and retry.','details'=>null]],'correlation_id'=>$cid]; }
+     curl_close($curl);
+     $body=json_decode($raw,true);
+     if (!is_array($body)) return ['status'=>502,'body'=>['error'=>['code'=>'INVALID_UPSTREAM_RESPONSE','message'=>'A service returned an invalid response.','details'=>null]],'correlation_id'=>$cid];
+--- a/services/payment/src/platform.php
++++ b/services/payment/src/platform.php
+@@ -51,7 +51,7 @@
+     if (!is_dir($folder)) mkdir($folder,0700,true);
+     $record=array_merge(['timestamp'=>gmdate('Y-m-d\TH:i:s\Z'),'service'=>service_name(),
+                          'event'=>$event,'correlation_id'=>$cid],$fields);
+-    file_put_contents($folder.'/events.jsonl',json_encode($record,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)."\n",FILE_APPEND|LOCK_EX);
++    file_put_contents((setting('LOG_STDOUT','false')==='true' ? 'php://stderr' : $folder.'/events.jsonl'),json_encode($record,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)."\n",FILE_APPEND | (setting('LOG_STDOUT','false')==='true' ? 0 : LOCK_EX));
+ }
+ 
+ function json_text(mixed $value): string {
+--- a/services/notification/src/platform.php
++++ b/services/notification/src/platform.php
+@@ -51,7 +51,7 @@
+     if (!is_dir($folder)) mkdir($folder,0700,true);
+     $record=array_merge(['timestamp'=>gmdate('Y-m-d\TH:i:s\Z'),'service'=>service_name(),
+                          'event'=>$event,'correlation_id'=>$cid],$fields);
+-    file_put_contents($folder.'/events.jsonl',json_encode($record,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)."\n",FILE_APPEND|LOCK_EX);
++    file_put_contents((setting('LOG_STDOUT','false')==='true' ? 'php://stderr' : $folder.'/events.jsonl'),json_encode($record,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)."\n",FILE_APPEND | (setting('LOG_STDOUT','false')==='true' ? 0 : LOCK_EX));
+ }
+ 
+ function json_text(mixed $value): string {
+--- a/.gitignore
++++ b/.gitignore
+@@ -7,3 +7,8 @@
+ .runtime/
+ logs/
+ *.local.sql
++
++/secrets/
++/deploy/generated/
++/evidence/private/
++*.log
