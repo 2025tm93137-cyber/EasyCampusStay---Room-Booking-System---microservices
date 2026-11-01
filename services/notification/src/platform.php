@@ -51,7 +51,7 @@ function log_event(string $event, string $cid='', array $fields=[]): void {
     if (!is_dir($folder)) mkdir($folder,0700,true);
     $record=array_merge(['timestamp'=>gmdate('Y-m-d\TH:i:s\Z'),'service'=>service_name(),
                          'event'=>$event,'correlation_id'=>$cid],$fields);
-    file_put_contents($folder.'/events.jsonl',json_encode($record,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)."\n",FILE_APPEND|LOCK_EX);
+    file_put_contents((setting('LOG_STDOUT','false')==='true' ? 'php://stderr' : $folder.'/events.jsonl'),json_encode($record,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)."\n",FILE_APPEND | (setting('LOG_STDOUT','false')==='true' ? 0 : LOCK_EX));
 }
 
 function json_text(mixed $value): string {

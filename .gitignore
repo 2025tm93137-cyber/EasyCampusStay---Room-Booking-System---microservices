@@ -7,3 +7,8 @@ __pycache__/
 .runtime/
 logs/
 *.local.sql
+
+/secrets/
+/deploy/generated/
+/evidence/private/
+*.log

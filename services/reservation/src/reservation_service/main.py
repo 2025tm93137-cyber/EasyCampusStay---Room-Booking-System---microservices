@@ -1,3 +1,4 @@
+"""Mujaffars Reservation code main file."""
 import hashlib
 import os
 import threading

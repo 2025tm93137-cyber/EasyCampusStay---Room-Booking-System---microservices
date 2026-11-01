@@ -11,7 +11,7 @@ from uuid import uuid4
 from .platform import BusinessError
 from .rules import require_capacity, require_confirmable, valid_stay_date
 
-
+# Create a room type and initialize its inventory for the requested dates.
 def create_room_type(conn, payload):
     """
     Create a new room type and initialize its available room stock.
@@ -37,7 +37,7 @@ def create_room_type(conn, payload):
     # Return the newly created room type details.
     return {'room_type_id': str(room_id), **payload.model_dump(mode='json')}
 
-
+# Reserve one unit of inventory for a booking by creating a room hold.
 def reserve(conn, booking_id, room_type_id, stay_date):
     """
     Reserve one room for a booking on the requested stay date.
@@ -91,7 +91,7 @@ def reserve(conn, booking_id, room_type_id, stay_date):
 
     return hold_body(row)
 
-
+# Convert a database hold record into a JSON-friendly response dictionary.
 def hold_body(row):
     """
     Convert a database hold record into an API-friendly dictionary.

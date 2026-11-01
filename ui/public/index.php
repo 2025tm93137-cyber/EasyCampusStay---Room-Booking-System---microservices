@@ -18,13 +18,13 @@ header('Cache-Control: no-store');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="<?=htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8')?>">
-    <title>Easy Stay | Simple hotel booking</title>
+    <title>Easy Campus Stay | A simple room-booking system</title>
     <link rel="stylesheet" href="/assets/style.css?v=easystay-1">
     <script src="/assets/app.js?v=easystay-1" defer></script>
 </head>
 <body>
 <header class="topbar">
-    <a class="brand" href="/" aria-label="Easy Stay home"><span class="brand-mark">es<span>.</span></span><span>Easy Stay<small>Simple hotel booking</small></span></a>
+    <a class="brand" href="/" aria-label="Easy Campus Stay home"><span class="brand-mark">es<span>.</span></span><span>Easy Campus Stay<small>A simple room-booking system</small></span></a>
     <span class="demo-badge"><span class="dot"></span> Practice booking · Demo payments</span>
 </header>
 <main>
@@ -37,7 +37,7 @@ header('Cache-Control: no-store');
     <section id="page-booking" role="tabpanel" aria-labelledby="tab-booking">
         <section class="intro">
             <div><p class="eyebrow">A ROOM. A NIGHT. ALL SORTED.</p><h1>Your next stay,<br>made easy.</h1><p>Choose a room, add a guest reference, and book.<br class="desktop-break"> We will show you what happens at every step.</p></div>
-            <div class="intro-note"><span class="intro-symbol" aria-hidden="true">1</span><div><strong>One room for one night</strong><p>A small hotel booking demo.<br>No real payment or email is sent.</p></div></div>
+            <div class="intro-note"><span class="intro-symbol" aria-hidden="true">1</span><div><strong>One room for one night</strong><p>A simple room-booking demo.<br>No real payment or email is sent.</p></div></div>
         </section>
         <div class="system-line"><span id="system-status">Checking booking services…</span><button id="open-services" class="link-button" type="button">View services</button></div>
         <div class="booking-layout">
@@ -88,10 +88,10 @@ header('Cache-Control: no-store');
             </section>
         </div>
         <section class="panel" aria-labelledby="inspect-title"><div class="panel-heading"><div><h2 id="inspect-title">4. Inspect the booking and API response</h2><p id="inspector-booking">No booking selected yet.</p></div><button id="back-to-booking" class="button secondary small" type="button">View booking</button></div><ol id="timeline" class="timeline" aria-label="Recorded booking workflow"></ol><div class="actions"><button id="inspect-payment" class="button secondary small" type="button">Inspect payment</button><button id="inspect-notification" class="button secondary small" type="button">Inspect notification</button></div><details id="raw-details" class="technical" open><summary>Inspect the last API response</summary><p class="help">status is the HTTP status. body contains the service response. A slow request’s original HTTP 202 stays visible while the booking card shows the latest status.</p><pre id="raw">No API request yet.</pre></details></section>
-        <details id="room-setup" class="panel setup-panel"><summary>Room setup: change the sample room details</summary><p class="muted">Creates a new room type with stock for the date selected on the booking tab. It does not refill or replace existing rooms.</p><form id="room-form"><div class="form-row"><div><label for="room-name">Room name</label><input id="room-name" value="Easy Stay Deluxe" maxlength="80" required></div><div><label for="capacity">Number of rooms to add</label><input id="capacity" type="number" min="1" max="1000" value="5" required></div><div><label for="price">Price for one night (INR)</label><input id="price" type="number" min="1" step="1" value="2500" required></div></div><p id="setup-date" class="help"></p><button class="button secondary" type="submit">Create these rooms and return to booking</button></form></details>
+        <details id="room-setup" class="panel setup-panel"><summary>Room setup: change the sample room details</summary><p class="muted">Creates a new room type with stock for the date selected on the booking tab. It does not refill or replace existing rooms.</p><form id="room-form"><div class="form-row"><div><label for="room-name">Room name</label><input id="room-name" value="Easy Campus Stay Deluxe" maxlength="80" required></div><div><label for="capacity">Number of rooms to add</label><input id="capacity" type="number" min="1" max="1000" value="5" required></div><div><label for="price">Price for one night (INR)</label><input id="price" type="number" min="1" step="1" value="2500" required></div></div><p id="setup-date" class="help"></p><button class="button secondary" type="submit">Create these rooms and return to booking</button></form></details>
         <section class="terminal-note"><h2>Steps 23–25 still run in PowerShell</h2><p>The scripted main flow, 20-request concurrency test, and simultaneous idempotency test create their own test inventory and save evidence. The buttons above help explain individual requests.</p><p class="help">Follow EASY_STAY_START_HERE.txt for the commands. Keep the service terminals running.</p></section>
     </section>
-    <footer>Easy Stay · Scalable Services assignment · Python and PHP · Local demonstration</footer>
+    <footer>Easy Campus Stay · Scalable Services assignment · Python and PHP · Local demonstration</footer>
 </main>
 </body>
 </html>

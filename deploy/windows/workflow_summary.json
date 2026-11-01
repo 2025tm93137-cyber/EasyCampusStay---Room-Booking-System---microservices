@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-10-31T22:32:38.625613+00:00",
+  "platform": "linux",
+  "deployment": "minikube",
+  "checks": {
+    "e2e": {
+      "result": "PASS",
+      "seconds": 0.41
+    },
+    "challenge_concurrency": {
+      "result": "PASS",
+      "seconds": 9.66
+    },
+    "challenge_idempotency": {
+      "result": "PASS",
+      "seconds": 12.08
+    },
+    "challenge_saga": {
+      "result": "PASS",
+      "seconds": 0.82
+    }
+  },
+  "peer_database_attempts_denied": 12,
+  "result": "PASS"
+}

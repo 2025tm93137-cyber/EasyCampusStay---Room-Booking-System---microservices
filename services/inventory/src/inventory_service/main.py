@@ -27,9 +27,10 @@ from . import repository
 # Initialize the FastAPI application for the Inventory Service.
 app = make_app('CampusStay Inventory Service')
 
-
-# -------------------- Request and Response Models --------------------
-
+# Defines the validation rules for creating a room type.
+# Extra fields are rejected to prevent unexpected input.
+# Capacity, price, currency, and dates are validated before
+# the request reaches the database layer.
 class RoomTypeCreate(BaseModel):
     """Validates the details required to create a new room type."""
 
@@ -94,19 +95,10 @@ def list_room_types():
     return {'room_types': rows}
 
 
-@app.post(
-    '/api/v1/room-types',
-    status_code=201,
-    response_model=RoomTypeResponse,
-    tags=['Room inventory']
-)
-def create_room_type(
-    payload: RoomTypeCreate,
-    key: IdempotencyKey,
-    request: Request
-):
-    """Create a room type and initialize its inventory for the specified dates."""
-
+@app.post('/api/v1/room-types', status_code=201, response_model=RoomTypeResponse, tags=['Room inventory'])
+def create_room_type(payload: RoomTypeCreate, key: IdempotencyKey, request: Request):
+    # Reuse the result of a previous request with the same
+    # idempotency key to avoid duplicate room type creation.
     def create(conn):
         return 201, repository.create_room_type(conn, payload)
 
@@ -162,21 +154,11 @@ def availability(room_type_id: UUID, stay_date: date):
     tags=['Room holds']
 )
 def reserve(payload: HoldCreate, key: IdempotencyKey, request: Request):
-    """Reserve one available room by creating a temporary booking hold."""
-
-    # Delegate reservation processing to the repository layer.
-    # Idempotency ensures that repeated requests do not create duplicate holds.
-    status, body = local_idempotent(
-        'holds:create',
-        key,
-        payload.model_dump(mode='json'),
-        lambda conn: (
-            201,
-            repository.reserve(conn, **payload.model_dump())
-        ),
-        request.state.correlation_id
-    )
-
+    # Create a room hold through the repository layer.
+    # Idempotency prevents duplicate holds when the same request is retried.
+    status, body = local_idempotent('holds:create', key, payload.model_dump(mode='json'),
+                                  lambda conn: (201, repository.reserve(conn, **payload.model_dump())),
+                                  request.state.correlation_id)
     return JSONResponse(status_code=status, content=body)
 
 
@@ -225,22 +207,9 @@ def release(booking_id: UUID, key: IdempotencyKey, request: Request):
 # -------------------- Shared Hold Management --------------------
 
 def change_hold(booking_id, action, key, request):
-    """
-    Process reservation hold state changes.
-
-    Supports confirmation and release operations while using
-    idempotency to prevent duplicate processing of requests.
-    """
-
-    status, body = local_idempotent(
-        'holds:' + action,
-        key,
-        {'booking_id': str(booking_id)},
-        lambda conn: (
-            200,
-            repository.change_hold(conn, booking_id, action)
-        ),
-        request.state.correlation_id
-    )
-
+    # Confirm or release an existing hold through the repository.
+    # The idempotency key helps make retries safe.
+    status, body = local_idempotent('holds:' + action, key, {'booking_id': str(booking_id)},
+                                  lambda conn: (200, repository.change_hold(conn, booking_id, action)),
+                                  request.state.correlation_id)
     return JSONResponse(status_code=status, content=body)

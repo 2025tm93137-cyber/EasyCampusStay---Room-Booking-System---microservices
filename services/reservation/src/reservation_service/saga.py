@@ -1,4 +1,4 @@
-"""Durable saga. Only HTTP touches other services; all SQL is reservation-local."""
+"""Mujaffars Durable saga Reservation changes. Only HTTP touches other services; all SQL is reservation-local."""
 import os
 import httpx
 from . import repository

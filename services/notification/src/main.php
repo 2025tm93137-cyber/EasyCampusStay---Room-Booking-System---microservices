@@ -4,7 +4,7 @@ namespace CampusStay;
 require_once __DIR__.'/platform.php';
 require_once __DIR__.'/rules.php';
 require_once __DIR__.'/repository.php';
-
+// Serve function implemented by Ambuj
 serve(function(string $method,string $path,string $cid): array {
     if ($path==='/api/v1/notifications' && $method!=='POST') throw new BusinessError(405,'HTTP_ERROR','Method Not Allowed');
     if ($method==='POST' && $path==='/api/v1/notifications') {

@@ -24,15 +24,12 @@ from pydantic import BaseModel
 from .mysql import Connection, json_document
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-
-# Load service-specific environment variables from the service directory.
+# Resolve the service root directory from this module's location.
 SERVICE_HOME = Path(__file__).resolve().parents[2]
 load_dotenv(SERVICE_HOME / '.env', override=False)
 SERVICE_NAME = SERVICE_HOME.name
 
-
-# -------------------- Standard Error Response Models --------------------
-
+# Standard structure for an individual API error.
 class ErrorDetail(BaseModel):
     """Defines the structure of an individual API error."""
 
@@ -46,8 +43,8 @@ class ErrorResponse(BaseModel):
 
     error: ErrorDetail
 
-
-# Maps HTTP status codes to the standardized error response model.
+# Document the standard error responses supported by the application.
+# These models help describe possible errors in the generated API schema.
 ERROR_RESPONSES = {
     status: {'model': ErrorResponse, 'description': description}
     for status, description in {

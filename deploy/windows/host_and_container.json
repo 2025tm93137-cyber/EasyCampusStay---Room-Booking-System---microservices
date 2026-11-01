@@ -1,0 +1,11 @@
+﻿{
+    "timestamp_utc":  "2026-10-31T22:33:02.1873448Z",
+    "profile":  "easystay-docker",
+    "node_runtime":  "docker://29.7.2",
+    "host_os":  "Microsoft Windows NT 10.0.26300.0",
+    "native_windows_host":  true,
+    "container_checks_platform":  "linux",
+    "note":  "The host can be Windows while the application and test containers report Linux.",
+    "workflow_exit_code":  0,
+    "result":  "PASS"
+}

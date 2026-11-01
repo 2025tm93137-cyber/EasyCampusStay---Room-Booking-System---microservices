@@ -1,0 +1,17 @@
+.git
+**/.env
+.env*
+**/.env.*
+**/.runtime
+**/__pycache__
+**/.pytest_cache
+**/*.pyc
+**/.venv
+**/logs
+logs
+evidence
+windows
+output
+*.zip
+*.pdf
+*.docx

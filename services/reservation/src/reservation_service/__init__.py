@@ -1,1 +1,1 @@
-"""Reservation service and durable REST saga coordinator."""
+"""Reservation service and durable REST saga coordinator changes."""

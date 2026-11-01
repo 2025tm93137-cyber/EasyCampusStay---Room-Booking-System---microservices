@@ -7,10 +7,8 @@ import argparse
 import json
 import os
 from pathlib import Path
-import shutil
 import signal
 import subprocess
-import sys
 
 SERVICE_DIR=Path(__file__).resolve().parent
 
@@ -67,12 +65,7 @@ def stop_child(process):
         taskkill=Path(os.environ.get('SystemRoot',r'C:\Windows'))/'System32/taskkill.exe'
         subprocess.run([str(taskkill),'/PID',str(process.pid),'/T','/F'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,check=False)
         process.wait(timeout=8)
-    else:
-        try: os.killpg(process.pid,signal.SIGTERM)
-        except ProcessLookupError: return
-        try: process.wait(timeout=8)
-        except subprocess.TimeoutExpired:
-            os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=3)
+    
 
 
 def interrupted(*args): raise KeyboardInterrupt
@@ -101,15 +94,7 @@ def main():
         command=[str(httpd),'-f',str(conf),'-DFOREGROUND']
         options={}
         label='XAMPP Apache / PHP'
-    else:
-        php=values.get('PHP_BINARY') or shutil.which('php')
-        if not php: raise SystemExit('PHP is missing; set PHP_BINARY to its executable.')
-        if args.check:
-            subprocess.run([php,'-l',str(SERVICE_DIR/'public/index.php')],check=True,env=values);return
-        values['PHP_CLI_SERVER_WORKERS']=values.get('PHP_CLI_SERVER_WORKERS','4')
-        command=[php,'-S',f'{host}:{port}','-t',str(SERVICE_DIR/'public'),str(SERVICE_DIR/'public/router.php')]
-        options={'start_new_session':True}
-        label='PHP multi-worker development server (Linux verification)'
+    
     print(f'{SERVICE_DIR.name}: {label} | http://{host}:{port}',flush=True)
     child=subprocess.Popen(command,cwd=SERVICE_DIR,env=values,**options)
     try:

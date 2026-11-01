@@ -1,4 +1,4 @@
-"""Small PyMySQL adapter, vendored locally; no service imports another service."""
+"""Mujaffar reservation Small PyMySQL adapter, vendored locally; no service imports another service."""
 from contextlib import contextmanager
 from datetime import date, datetime
 import hashlib
