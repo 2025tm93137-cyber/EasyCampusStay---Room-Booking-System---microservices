@@ -1,0 +1,375 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory
+  namespace: easy-campus-stay
+spec:
+  selector:
+    app: inventory
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory
+  namespace: easy-campus-stay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      containers:
+      - name: inventory
+        image: easystay/inventory:assignment2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_HOST
+          value: db
+        - name: DB_PORT
+          value: '3306'
+        - name: DB_NAME
+          value: campusstay_inventory
+        - name: DB_USER
+          value: cs_inventory
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: INVENTORY_DB_PASSWORD
+        - name: BASE_URL
+          value: http://inventory:8080
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 96Mi
+          limits:
+            memory: 384Mi
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 3
+          failureThreshold: 40
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 4
+          failureThreshold: 3
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+          failureThreshold: 6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reservation
+  namespace: easy-campus-stay
+spec:
+  selector:
+    app: reservation
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation
+  namespace: easy-campus-stay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservation
+  template:
+    metadata:
+      labels:
+        app: reservation
+    spec:
+      containers:
+      - name: reservation
+        image: easystay/reservation:assignment2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_HOST
+          value: db
+        - name: DB_PORT
+          value: '3306'
+        - name: DB_NAME
+          value: campusstay_reservation
+        - name: DB_USER
+          value: cs_reservation
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: RESERVATION_DB_PASSWORD
+        - name: BASE_URL
+          value: http://reservation:8080
+        - name: INVENTORY_URL
+          value: http://inventory:8080
+        - name: PAYMENT_URL
+          value: http://payment:8080
+        - name: NOTIFICATION_URL
+          value: http://notification:8080
+        - name: RECOVERY_ENABLED
+          value: 'true'
+        - name: RECOVERY_INTERVAL_SECONDS
+          value: '1'
+        - name: HTTP_TIMEOUT_SECONDS
+          value: '1.5'
+        - name: IDEMPOTENCY_WAIT_SECONDS
+          value: '20'
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 96Mi
+          limits:
+            memory: 384Mi
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 3
+          failureThreshold: 40
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 4
+          failureThreshold: 3
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+          failureThreshold: 6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+  namespace: easy-campus-stay
+spec:
+  selector:
+    app: payment
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment
+  namespace: easy-campus-stay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      containers:
+      - name: payment
+        image: easystay/payment:assignment2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_HOST
+          value: db
+        - name: DB_PORT
+          value: '3306'
+        - name: DB_NAME
+          value: campusstay_payment
+        - name: DB_USER
+          value: cs_payment
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: PAYMENT_DB_PASSWORD
+        - name: BASE_URL
+          value: http://payment:8080
+        - name: PAYMENT_DELAY_SECONDS
+          value: '3'
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 96Mi
+          limits:
+            memory: 384Mi
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 3
+          failureThreshold: 40
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 4
+          failureThreshold: 3
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+          failureThreshold: 6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification
+  namespace: easy-campus-stay
+spec:
+  selector:
+    app: notification
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification
+  namespace: easy-campus-stay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      containers:
+      - name: notification
+        image: easystay/notification:assignment2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_HOST
+          value: db
+        - name: DB_PORT
+          value: '3306'
+        - name: DB_NAME
+          value: campusstay_notification
+        - name: DB_USER
+          value: cs_notification
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: easystay-secrets
+              key: NOTIFICATION_DB_PASSWORD
+        - name: BASE_URL
+          value: http://notification:8080
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 96Mi
+          limits:
+            memory: 384Mi
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 3
+          failureThreshold: 40
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 4
+          failureThreshold: 3
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+          failureThreshold: 6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+  namespace: easy-campus-stay
+spec:
+  selector:
+    app: ui
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui
+  namespace: easy-campus-stay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+      - name: ui
+        image: easystay/ui:assignment2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: INVENTORY_URL
+          value: http://inventory:8080
+        - name: RESERVATION_URL
+          value: http://reservation:8080
+        - name: PAYMENT_URL
+          value: http://payment:8080
+        - name: NOTIFICATION_URL
+          value: http://notification:8080
+        - name: UI_ALLOWED_UPSTREAM_HOSTS
+          value: inventory,reservation,payment,notification
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 96Mi
+          limits:
+            memory: 384Mi
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 3
+          failureThreshold: 40
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 4
+          failureThreshold: 3
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+          failureThreshold: 6

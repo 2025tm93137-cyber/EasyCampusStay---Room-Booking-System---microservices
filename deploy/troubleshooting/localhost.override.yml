@@ -1,0 +1,6 @@
+# Deliberately injected exercise, NOT evidence of a naturally encountered incident.
+# Inside Reservation, localhost points to Reservation rather than Inventory.
+services:
+  reservation:
+    environment:
+      INVENTORY_URL: http://127.0.0.1:8101

@@ -1,0 +1,176 @@
+name: easy-campus-stay-a2
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      MARIADB_ROOT_HOST: '%'
+    volumes:
+    - database_data:/var/lib/mysql
+    healthcheck:
+      test:
+      - CMD
+      - healthcheck.sh
+      - --connect
+      - --innodb_initialized
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 30s
+    restart: unless-stopped
+  db-init:
+    image: easystay/provision:assignment2
+    build:
+      context: .
+      dockerfile: deploy/provision/Dockerfile
+    environment:
+      DB_HOST: db
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      INVENTORY_DB_PASSWORD: ${INVENTORY_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      RESERVATION_DB_PASSWORD: ${RESERVATION_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      PAYMENT_DB_PASSWORD: ${PAYMENT_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      NOTIFICATION_DB_PASSWORD: ${NOTIFICATION_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: 'no'
+  inventory:
+    image: easystay/inventory:assignment2
+    build:
+      context: .
+      dockerfile: services/inventory/Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: '3306'
+      DB_NAME: campusstay_inventory
+      DB_USER: cs_inventory
+      DB_PASSWORD: ${INVENTORY_DB_PASSWORD:?Run py -3.12 deploy/configure.py first}
+      BASE_URL: http://inventory:8080
+    ports:
+    - 127.0.0.1:8101:8080
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+  reservation:
+    image: easystay/reservation:assignment2
+    build:
+      context: .
+      dockerfile: services/reservation/Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: '3306'
+      DB_NAME: campusstay_reservation
+      DB_USER: cs_reservation
+      DB_PASSWORD: ${RESERVATION_DB_PASSWORD:?Run py -3.12 deploy/configure.py first}
+      BASE_URL: http://reservation:8080
+      INVENTORY_URL: http://inventory:8080
+      PAYMENT_URL: http://payment:8080
+      NOTIFICATION_URL: http://notification:8080
+      HTTP_TIMEOUT_SECONDS: '1.5'
+      IDEMPOTENCY_WAIT_SECONDS: '20'
+      RECOVERY_ENABLED: 'true'
+      RECOVERY_INTERVAL_SECONDS: '1'
+    ports:
+    - 127.0.0.1:8102:8080
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+      inventory:
+        condition: service_healthy
+      payment:
+        condition: service_healthy
+      notification:
+        condition: service_healthy
+    restart: unless-stopped
+  payment:
+    image: easystay/payment:assignment2
+    build:
+      context: .
+      dockerfile: services/payment/Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: '3306'
+      DB_NAME: campusstay_payment
+      DB_USER: cs_payment
+      DB_PASSWORD: ${PAYMENT_DB_PASSWORD:?Run py -3.12 deploy/configure.py first}
+      BASE_URL: http://payment:8080
+      PAYMENT_DELAY_SECONDS: '3'
+    ports:
+    - 127.0.0.1:8103:8080
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+  notification:
+    image: easystay/notification:assignment2
+    build:
+      context: .
+      dockerfile: services/notification/Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: '3306'
+      DB_NAME: campusstay_notification
+      DB_USER: cs_notification
+      DB_PASSWORD: ${NOTIFICATION_DB_PASSWORD:?Run py -3.12 deploy/configure.py first}
+      BASE_URL: http://notification:8080
+    ports:
+    - 127.0.0.1:8104:8080
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+  ui:
+    image: easystay/ui:assignment2
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+    environment:
+      INVENTORY_URL: http://inventory:8080
+      RESERVATION_URL: http://reservation:8080
+      PAYMENT_URL: http://payment:8080
+      NOTIFICATION_URL: http://notification:8080
+      UI_ALLOWED_UPSTREAM_HOSTS: inventory,reservation,payment,notification
+    ports:
+    - 127.0.0.1:${UI_PORT:-8180}:8080
+    depends_on:
+      inventory:
+        condition: service_healthy
+      reservation:
+        condition: service_healthy
+      payment:
+        condition: service_healthy
+      notification:
+        condition: service_healthy
+    restart: unless-stopped
+  tools:
+    image: easystay/tools:assignment2
+    build:
+      context: .
+      dockerfile: deploy/tools/Dockerfile
+    profiles:
+    - test
+    environment:
+      DB_HOST: db
+      INVENTORY_DB_PASSWORD: ${INVENTORY_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      RESERVATION_DB_PASSWORD: ${RESERVATION_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      PAYMENT_DB_PASSWORD: ${PAYMENT_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+      NOTIFICATION_DB_PASSWORD: ${NOTIFICATION_DB_PASSWORD:?Run py -3.12 deploy/configure.py
+        first}
+    volumes:
+    - ./evidence:/app/evidence
+    depends_on:
+      ui:
+        condition: service_healthy
+    restart: 'no'
+volumes:
+  database_data: {}

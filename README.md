@@ -130,3 +130,7 @@ Use a running local MariaDB 10.4+ server and PHP 8.0+ with pdo_mysql/curl. Insta
 - MariaDB GET_LOCK: https://mariadb.com/docs/server/reference/sql-functions/secondary-functions/miscellaneous-functions/get_lock
 - PHP development server limitations: https://www.php.net/manual/en/features.commandline.webserver.php
 - Git basics: https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
+
+## Assignment 2: Docker deployment
+
+See [Assignment 2 deployment guide](README_ASSIGNMENT2.md).

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: deployment-tools
+  namespace: easy-campus-stay
+  labels:
+    app: deployment-tools
+spec:
+  enableServiceLinks: false
+  restartPolicy: Never
+  containers:
+  - name: tools
+    image: easystay/tools:assignment2
+    imagePullPolicy: IfNotPresent
+    command:
+    - python
+    - -c
+    - import time; time.sleep(86400)
+    env:
+    - name: DB_HOST
+      value: db
+    - name: DB_PORT
+      value: '3306'
+    - name: DEPLOYMENT_KIND
+      value: minikube
+    - name: INVENTORY_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: easystay-secrets
+          key: INVENTORY_DB_PASSWORD
+    - name: RESERVATION_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: easystay-secrets
+          key: RESERVATION_DB_PASSWORD
+    - name: PAYMENT_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: easystay-secrets
+          key: PAYMENT_DB_PASSWORD
+    - name: NOTIFICATION_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: easystay-secrets
+          key: NOTIFICATION_DB_PASSWORD
