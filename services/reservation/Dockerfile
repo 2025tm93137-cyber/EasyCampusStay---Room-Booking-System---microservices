@@ -6,6 +6,7 @@ RUN pip install --no-cache-dir -r requirements.lock.txt && useradd --create-home
 COPY --chown=app:app services/reservation/src ./src
 COPY --chown=app:app services/reservation/run.py ./run.py
 RUN mkdir logs && chown app:app logs
+# Mujaffar Run the Reservation service as a non-root user.
 USER app
 EXPOSE 8080
 HEALTHCHECK --interval=10s --timeout=4s --start-period=30s --retries=6 CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"
